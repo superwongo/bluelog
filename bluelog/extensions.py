@@ -18,4 +18,4 @@ bootstrap = Bootstrap()
 db = SQLAlchemy()
 moment = Moment()
 ckeditor = CKEditor()
-mail = Mail
+mail = Mail()
