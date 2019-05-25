@@ -72,7 +72,11 @@ def register_shell_context(app):
 
 def register_template_context(app):
     """模板上下文处理函数"""
-    pass
+    @app.context_processor
+    def make_template_context():
+        admin = Admin.query.first()
+        categories = Category.query.order_by(Category.name).all()
+        return dict(admin=admin, categories=categories)
 
 
 def register_errors(app):
@@ -80,3 +84,6 @@ def register_errors(app):
     @app.errorhandler(400)
     def bad_request(e):
         return render_template('errors/400.html'), 400
+
+
+from bluelog.models import Admin, Category
