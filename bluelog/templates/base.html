@@ -1,3 +1,4 @@
+{% from 'bootstrap/nav.html' import render_nav_item %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,9 +23,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a href="/" class="nav-link">Home</a>
-                        </li>
+                        {{ render_nav_item('blog.index', 'Home') }}
+                        {{ render_nav_item('blog.about', 'About') }}
                     </ul>
                 </div>
             </div>
@@ -50,7 +50,7 @@
         <script type="text/javascript" src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/moment-with-locales.min.js') }}"></script>
+        {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     {% endblock %}
 </body>
 </html>

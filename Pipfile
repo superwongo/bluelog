@@ -8,7 +8,6 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-flask-bootstrap = "*"
 flask-sqlalchemy = "*"
 flask-mail = "*"
 flask-ckeditor = "*"
@@ -16,6 +15,8 @@ flask-moment = "*"
 faker = "*"
 python-dotenv = "*"
 flask-wtf = "*"
+bootstrap-flask = "*"
+flask-login = "*"
 
 [requires]
 python_version = "3.6"
