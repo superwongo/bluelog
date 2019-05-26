@@ -11,8 +11,10 @@
 import os
 
 from flask import Flask, render_template
+from flask_wtf.csrf import CSRFError
+from flask_login import current_user
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
@@ -50,6 +52,7 @@ def register_extensions(app):
     ckeditor.init_app(app)
     mail.init_app(app)
     login_manager.init_app(app)
+    csrf.init_app(app)
 
 
 def register_logging(app):
@@ -77,7 +80,12 @@ def register_template_context(app):
     def make_template_context():
         admin = Admin.query.first()
         categories = Category.query.order_by(Category.name).all()
-        return dict(admin=admin, categories=categories)
+
+        if current_user.is_authenticated:
+            unread_comments = Comment.query.filter_by(reviewed=False).count()
+        else:
+            unread_comments = None
+        return dict(admin=admin, categories=categories, unread_comments=unread_comments)
 
 
 def register_errors(app):
@@ -86,5 +94,17 @@ def register_errors(app):
     def bad_request(e):
         return render_template('errors/400.html'), 400
 
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('errors/404.html'), 404
 
-from bluelog.models import Admin, Category
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return render_template('errors/500.html'), 500
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(e):
+        return render_template('errors/400.html', description=e.description), 400
+
+
+from bluelog.models import Admin, Category, Comment
