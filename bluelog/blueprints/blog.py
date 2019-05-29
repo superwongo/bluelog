@@ -22,6 +22,7 @@ bp = Blueprint('blog', __name__)
 
 @bp.route('/')
 def index():
+    """首页"""
     # 从查询字符串获取当前页数
     page = request.args.get('page', 1, type=int)
     # 每页数量
@@ -35,11 +36,13 @@ def index():
 
 @bp.route('/about')
 def about():
+    """关于"""
     return render_template('blog/about.html')
 
 
 @bp.route('/category/<int:category_id>')
 def show_category(category_id):
+    """分类展示"""
     category = Category.query.get_or_404(category_id)
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLUELOG_POST_PER_PAGE']
@@ -50,6 +53,7 @@ def show_category(category_id):
 
 @bp.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def show_post(post_id):
+    """文章展示"""
     post = Post.query.get_or_404(post_id)
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLUELOG_COMMENT_PER_PAGE']
@@ -101,6 +105,7 @@ def show_post(post_id):
 
 @bp.route('/reply/comment/<int:comment_id>')
 def reply_comment(comment_id):
+    """回复评论"""
     comment = Comment.query.get_or_404(comment_id)
     return redirect(url_for('.show_post', post_id=comment.post_id,
                             reply=comment_id, author=comment.author) + '#comment-form')
@@ -108,6 +113,7 @@ def reply_comment(comment_id):
 
 @bp.route('/change-theme/<theme_name>')
 def change_theme(theme_name):
+    """切换主题"""
     if theme_name not in current_app.config['BLUELOG_THEMES'].keys():
         abort(404)
 

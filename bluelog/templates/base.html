@@ -16,8 +16,8 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
                 <a href="/" class="navbar-brand">Bluelog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="$navbarColor01"
-                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggler navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -46,7 +46,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a href="{{ url_for('admin.new_post') }}" class="dropdown-item">Post</a>
-                                <a href="{{ user_for('admin.new_category') }}" class="dropdown-item">Category</a>
+                                <a href="{{ url_for('admin.new_category') }}" class="dropdown-item">Category</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -58,8 +58,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a href="{{ url_for('admin.manage_post') }}" class="dropdown-item">Post</a>
-                                <a href="{{ user_for('admin.manage_category') }}" class="dropdown-item">Category</a>
-                                <a href="{{ user_for('admin.manage_comment') }}" class="dropdown-item">
+                                <a href="{{ url_for('admin.manage_category') }}" class="dropdown-item">Category</a>
+                                <a href="{{ url_for('admin.manage_comment') }}" class="dropdown-item">
                                     Comment
                                     {% if unread_comments %}
                                         <span class="badge badge-success">{{ unread_comments }}</span>
