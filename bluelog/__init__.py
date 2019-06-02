@@ -9,15 +9,20 @@
 """
 
 import os
+import logging
+from logging.handlers import SMTPHandler, RotatingFileHandler
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_wtf.csrf import CSRFError
 from flask_login import current_user
+from flask_sqlalchemy import get_debug_queries
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
+
+basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 
 def create_app(config_name=None):
@@ -41,6 +46,14 @@ def create_app(config_name=None):
     register_errors(app)
     # 注册自定义shell命令
     register_commands(app)
+    # 注册请求处理函数
+    register_request_handlers(app)
+
+    try:
+        if app.config['BLUELOG_UPLOAD_PATH']:
+            os.makedirs(app.config['BLUELOG_UPLOAD_PATH'])
+    except OSError:
+        pass
     return app
 
 
@@ -53,11 +66,46 @@ def register_extensions(app):
     mail.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+    migrate.init_app(app, db)
 
 
 def register_logging(app):
     """日志处理器"""
-    pass
+    class RequestFormatter(logging.Formatter):
+        def format(self, record):
+            record.url = request.url
+            record.remote_addr = request.remote_addr
+            return super(RequestFormatter, self).format(record)
+
+    request_formatter = RequestFormatter(
+        '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+        '%(levelname)s in %(module)s: %(message)s'
+    )
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    logs_dir = os.path.join(basedir, 'logs')
+    try:
+        os.makedirs(logs_dir)
+    except OSError:
+        pass
+    file_handler = RotatingFileHandler(os.path.join(logs_dir, 'bluelog.log'), maxBytes=10 * 1024 * 1024, backupCount=10)
+
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    mail_handler = SMTPHandler(
+        mailhost=app.config['MAIL_SERVER'],
+        fromaddr=app.config['MAIL_USERNAME'],
+        toaddrs=['ADMIN_EMAIL'],
+        subject='Bluelog Application Error',
+        credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']))
+    mail_handler.setLevel(logging.ERROR)
+    mail_handler.setFormatter(request_formatter)
+
+    if not app.debug:
+        app.logger.addHandler(mail_handler)
+        app.logger.addHandler(file_handler)
 
 
 def register_blueprints(app):
@@ -107,4 +155,15 @@ def register_errors(app):
         return render_template('errors/400.html', description=e.description), 400
 
 
-from bluelog.models import Admin, Category, Comment
+def register_request_handlers(app):
+    @app.after_request
+    def query_profiler(response):
+        for q in get_debug_queries():
+            if q.duration >= app.config['BLUELOG_SLOW_QUERY_THRESHOLD']:
+                app.logger.warning(
+                    'Slow query: Duration: %fs\n Context: %s\nQuery: %s\n ' % (q.duration, q.context, q.statement)
+                )
+        return response
+
+
+from bluelog.models import *

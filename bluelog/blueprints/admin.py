@@ -8,13 +8,16 @@
 @detail: 管理员蓝图
 """
 
-from flask import Blueprint, render_template, request, current_app, flash, redirect, url_for
-from flask_login import login_required
+import os
+
+from flask import Blueprint, render_template, request, current_app, flash, redirect, url_for, send_from_directory
+from flask_login import login_required, current_user
+from flask_ckeditor import upload_success, upload_fail
 
 from bluelog.models import Post, Category, Comment
-from bluelog.forms import PostForm
+from bluelog.forms import PostForm, CategoryForm, SettingsForm
 from bluelog.extensions import db
-from bluelog.utils import redirect_back
+from bluelog.utils import redirect_back, allowed_file
 
 bp = Blueprint('admin', __name__)
 
@@ -26,9 +29,22 @@ def login_protect():
     pass
 
 
-@bp.route('/settings')
+@bp.route('/settings', methods=['GET', 'POST'])
 def settings():
-    return render_template('admin/settings.html')
+    form = SettingsForm()
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.blog_title = form.blog_title.data
+        current_user.blog_sub_title = form.blog_sub_title.data
+        current_user.about = form.about.data
+        db.session.commit()
+        flash('Settings Updated.', 'success')
+        return redirect(url_for('blog.index'))
+    form.name.data = current_user.name
+    form.blog_title.data = current_user.blog_title
+    form.blog_sub_title.data = current_user.blog_sub_title
+    form.about.data = current_user.about
+    return render_template('admin/settings.html', form=form)
 
 
 @bp.route('/post/manage')
@@ -83,13 +99,54 @@ def delete_post(post_id):
 
 
 @bp.route('/category/manage')
-@login_required
 def manage_category():
-    return render_template('admin/manage_category.html')
+    categories = Category.query.all()
+    return render_template('admin/manage_category.html', categories=categories)
+
+
+@bp.route('/category/new', methods=['GET', 'POST'])
+def new_category():
+    form = CategoryForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        category = Category(name=name)
+        db.session.add(category)
+        db.session.commit()
+        flash('Category created.', 'success')
+        return redirect(url_for('.manage_category'))
+    return render_template('admin/new_category.html', form=form)
+
+
+@bp.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
+def edit_category(category_id):
+    category = Category.query.get_or_404(category_id)
+    form = CategoryForm()
+    if category.id == 1:
+        flash('You can not edit the default category.', 'warning')
+        return redirect(url_for('blog.index'))
+    if form.validate_on_submit():
+        category.name = form.name.data
+        db.session.commit()
+        flash('Category updated.', 'success')
+        return redirect(url_for('.manage_category'))
+
+    form.name.data = category.name
+    return render_template('admin/edit_category.html', form=form)
+
+
+@bp.route('/category/<int:category_id>/delete', methods=['POST'])
+def delete_category(category_id):
+    category = Category.query.get_or_404(category_id)
+    if category.id == 1:
+        flash('You can not delete the default category.', 'warning')
+        return redirect(url_for('blog.index'))
+    # 调用category对象的delete()方法删除分类
+    category.delete()
+    flash('Category deleted.', 'success')
+    return redirect(url_for('.manage_category'))
 
 
 @bp.route('/set-comment/<int:post_id>', methods=['POST'])
-@login_required
 def set_comment(post_id):
     post = Post.query.get_or_404(post_id)
     if post.can_comment:
@@ -102,8 +159,7 @@ def set_comment(post_id):
     return redirect(url_for('blog.show_post', post_id=post_id))
 
 
-@bp.route('/comment/<int:comment_id>/approve')
-@login_required
+@bp.route('/comment/<int:comment_id>/approve', methods=['POST'])
 def approve_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.reviewed = True
@@ -113,7 +169,6 @@ def approve_comment(comment_id):
 
 
 @bp.route('/comment/manage')
-@login_required
 def manage_comment():
     # 筛选条件：'all', 'unread', 'admin'
     filter_rule = request.args.get('filter', 'all')
@@ -131,31 +186,25 @@ def manage_comment():
     return render_template('admin/manage_comment.html', comments=comments, pagination=pagination)
 
 
-@bp.route('/category/new', methods=['GET', 'POST'])
-def new_category():
-    pass
-
-
-@bp.route('/category/<int:category_id>/edit', methods=['GET', 'POST'])
-def edit_category(category_id):
-    pass
-
-
-@bp.route('/category/<int:category_id>/delete', methods=['POST'])
-def delete_category(category_id):
-    pass
-
-
-@bp.route('/comment/new', methods=['GET', 'POST'])
-def new_comment():
-    pass
-
-
-@bp.route('/comment/<int:comment_id>/edit', methods=['GET', 'POST'])
-def edit_comment(comment_id):
-    pass
-
-
 @bp.route('/comment/<int:comment_id>/delete', methods=['POST'])
 def delete_comment(comment_id):
-    pass
+    comment = Comment.query.get_or_404(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Commit deleted.', 'success')
+    return redirect_back()
+
+
+@bp.route('/uploads/<path:filename>')
+def get_image(filename):
+    return send_from_directory(current_app.config['BLUELOG_UPLOAD_PATH'], filename)
+
+
+@bp.route('/upload', methods=['POST'])
+def upload_image():
+    f = request.files.get('upload')
+    if not allowed_file(f.filename):
+        return upload_fail('Image only!')
+    f.save(os.path.join(current_app.config['BLUELOG_UPLOAD_PATH'], f.filename))
+    url = url_for('.get_image', filename=f.filename)
+    return upload_success(url, f.filename)

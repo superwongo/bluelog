@@ -39,6 +39,15 @@ class Category(db.Model):
     # 集合关系属性
     posts = db.relationship('Post', back_populates='category')
 
+    def delete(self):
+        # 获取默认分类记录
+        default_category = Category.query.get(1)
+        posts = self.posts[:]
+        for post in posts:
+            post.category = default_category
+        db.session.delete(self)
+        db.session.commit()
+
 
 class Post(db.Model):
     """文章"""
