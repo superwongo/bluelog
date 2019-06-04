@@ -12,24 +12,25 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired, Length, ValidationError, Email, Optional, URL
 from flask_ckeditor import CKEditorField
+from flask_babel import lazy_gettext as _l
 
-from  bluelog.models import Category
+from bluelog.models import Category
 
 
 class LoginForm(FlaskForm):
     """登录表单"""
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(8, 128)])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Log in')
+    username = StringField(_l('Username'), validators=[DataRequired(), Length(1, 20)])
+    password = PasswordField(_l('Password'), validators=[DataRequired(), Length(8, 128)])
+    remember = BooleanField(_l('Remember me'))
+    submit = SubmitField(_l('Log in'))
 
 
 class PostForm(FlaskForm):
     """文章表单"""
-    title = StringField('Title', validators=[DataRequired(), Length(1, 60)])
-    category = SelectField('Category', coerce=int, default=1)
-    body = CKEditorField('Body', validators=[DataRequired()])
-    submit = SubmitField()
+    title = StringField(_l('Title'), validators=[DataRequired(), Length(1, 60)])
+    category = SelectField(_l('Category'), coerce=int, default=1)
+    body = CKEditorField(_l('Body'), validators=[DataRequired()])
+    submit = SubmitField(_l('Submit'))
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -38,21 +39,21 @@ class PostForm(FlaskForm):
 
 class CategoryForm(FlaskForm):
     """分类创建表单"""
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    submit = SubmitField()
+    name = StringField(_l('Name'), validators=[DataRequired(), Length(1, 30)])
+    submit = SubmitField(_l('Submit'))
 
     def validate_name(self, field):
         if Category.query.filter_by(name=field.data).first():
-            raise ValidationError('Name already in use.')
+            raise ValidationError(_l('Name already in use.'))
 
 
 class CommentForm(FlaskForm):
     """评论表单"""
-    author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
-    site = StringField('Site', validators=[Optional(), URL(), Length(0, 255)])
-    body = TextAreaField('Comment', validators=[DataRequired()])
-    submit = SubmitField()
+    author = StringField(_l('Name'), validators=[DataRequired(), Length(1, 30)])
+    email = StringField(_l('Email'), validators=[DataRequired(), Email(), Length(1, 254)])
+    site = StringField(_l('Site'), validators=[Optional(), URL(), Length(0, 255)])
+    body = TextAreaField(_l('Comment'), validators=[DataRequired()])
+    submit = SubmitField(_l('Submit'))
 
 
 class AdminCommentForm(CommentForm):
@@ -64,8 +65,8 @@ class AdminCommentForm(CommentForm):
 
 class SettingsForm(FlaskForm):
     """设置表单"""
-    name = StringField('Username', validators=[DataRequired(), Length(1, 70)])
-    blog_title = StringField('Blog Title', validators=[DataRequired(), Length(1, 60)])
-    blog_sub_title = StringField('Blog Sub Title', validators=[DataRequired(), Length(1, 100)])
-    about = CKEditorField('About Page', validators=[DataRequired()])
-    submit = SubmitField()
+    name = StringField(_l('Username'), validators=[DataRequired(), Length(1, 70)])
+    blog_title = StringField(_l('Blog Title'), validators=[DataRequired(), Length(1, 60)])
+    blog_sub_title = StringField(_l('Blog Sub Title'), validators=[DataRequired(), Length(1, 100)])
+    about = CKEditorField(_l('About Page'), validators=[DataRequired()])
+    submit = SubmitField(_l('Submit'))

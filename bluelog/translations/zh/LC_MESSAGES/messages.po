@@ -1,0 +1,573 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-06-04 10:54+0800\n"
+"PO-Revision-Date: 2019-06-03 16:26+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#: bluelog/__init__.py:118
+msgid "Bluelog Application Error"
+msgstr "部落格应用程序错误"
+
+#: bluelog/commands.py:23
+msgid "Create after drop."
+msgstr "删除后重建数据库"
+
+#: bluelog/commands.py:27
+msgid "This operation will delete the database, do you want to continue?"
+msgstr "此操作将删除数据库，您确认继续吗？"
+
+#: bluelog/commands.py:29
+msgid "Drop tables."
+msgstr "删除表"
+
+#: bluelog/commands.py:31
+msgid "Initialized database."
+msgstr "初始化数据库"
+
+#: bluelog/commands.py:34
+msgid "Quantity of categories, default is 10"
+msgstr "分类数量，默认10条"
+
+#: bluelog/commands.py:35
+msgid "Quantity of posts, default is 50"
+msgstr "文章数量，默认50条"
+
+#: bluelog/commands.py:36
+msgid "Quantity of comments, default is 500"
+msgstr "评论数量，默认500条"
+
+#: bluelog/commands.py:43
+msgid "Generating the administrator..."
+msgstr "正在生成管理员信息......"
+
+#: bluelog/commands.py:46
+#, python-format
+msgid "Generating %(category)s categories..."
+msgstr "正在生成%(category)s条分类信息......"
+
+#: bluelog/commands.py:49
+#, python-format
+msgid "Generating %(post)s posts..."
+msgstr "正在生成%(post)s条文章信息......"
+
+#: bluelog/commands.py:52
+#, python-format
+msgid "Generating %(comment)s comments..."
+msgstr "正在生成%(comment)s条评论信息......"
+
+#: bluelog/commands.py:55 bluelog/commands.py:89
+msgid "Done."
+msgstr "已完成。"
+
+#: bluelog/commands.py:58
+msgid "The username used to login."
+msgstr "用于登录的用户名"
+
+#: bluelog/commands.py:61
+msgid "The password used to login."
+msgstr "用于登录的密码"
+
+#: bluelog/commands.py:64
+msgid "Initializing the database..."
+msgstr "正在初始化数据库......"
+
+#: bluelog/commands.py:69
+msgid "The administrator already exists. updating..."
+msgstr "管理员已存在，正在更新......"
+
+#: bluelog/commands.py:73
+msgid "Creating the temporary administrator account..."
+msgstr "正在创建临时管理员账户信息......"
+
+#: bluelog/commands.py:75 bluelog/templates/base.html:9
+#: bluelog/templates/base.html:19
+msgid "Bluelog"
+msgstr "部落格"
+
+#: bluelog/commands.py:76 bluelog/fakes.py:27
+msgid "No, I'm the real thing."
+msgstr "不，我是真的。"
+
+#: bluelog/commands.py:78
+msgid "Anything about you."
+msgstr "关于你"
+
+#: bluelog/commands.py:84
+msgid "Creating the default category..."
+msgstr "正在创建默认分类......"
+
+#: bluelog/commands.py:85 bluelog/fakes.py:38
+msgid "Default"
+msgstr "默认"
+
+#: bluelog/emails.py:37
+msgid "New comment"
+msgstr "新增评论"
+
+#: bluelog/emails.py:39
+#, python-format
+msgid ""
+"\n"
+"                             <p>New comment in post <i>%(title)s</i>, "
+"click the link below to check:</p>\n"
+"                             <p><a href=\"%(url)s\">%(url)s</a></p>\n"
+"                             <p><small style=\"color: #868e96\">Do not "
+"reply this email.</small></p>\n"
+"                         "
+msgstr ""
+"\n"
+"                             <p>您文章中有新增评论 <i>%(title)s</i>, 点击下方链接查看:</p>"
+"\n"
+"                             <p><a href=\"%(url)s\">%(url)s</a></p>\n"
+"                             <p><small style=\"color: #868e96\">Do not "
+"reply this email.</small></p>\n"
+"                         "
+
+#: bluelog/emails.py:49
+msgid "New reply"
+msgstr "新增回复"
+
+#: bluelog/emails.py:51
+#, python-format
+msgid ""
+"\n"
+"                              <p>New reply for the comment you left in "
+"post \n"
+"                                  <i>%(title)s</i>, click the link below "
+"to check:\n"
+"                              </p>\n"
+"                              <p><a href=\"%(url)s\">%(url)s</a></p>\n"
+"                              <p><small style=\"color: #868e96\">Do not "
+"reply this email.</small></p>\n"
+"                          "
+msgstr ""
+"\n"
+"                              <p>您在文章中的评论已回复 \n"
+"                                  <i>%(title)s</i>, 点击下方链接查看:\n"
+"                              </p>\n"
+"                              <p><a href=\"%(url)s\">%(url)s</a></p>\n"
+"                              <p><small style=\"color: "
+"#868e96\">此邮件无需回复</small></p>\n"
+"                          "
+
+#: bluelog/fakes.py:26
+msgid "Blueblog"
+msgstr "部落格"
+
+#: bluelog/fakes.py:29
+msgid "Um, I, Super Wong, had a fun time as member of CHAM..."
+msgstr "额嗯，我，Super Wong，很高兴成为管理员"
+
+#: bluelog/forms.py:22 bluelog/forms.py:68
+msgid "Username"
+msgstr "用户名"
+
+#: bluelog/forms.py:23
+msgid "Password"
+msgstr "密码"
+
+#: bluelog/forms.py:24
+msgid "Remember me"
+msgstr "记住我"
+
+#: bluelog/forms.py:25 bluelog/templates/auth/login.html:9
+msgid "Log in"
+msgstr "登录"
+
+#: bluelog/forms.py:30 bluelog/templates/admin/manage_post.html:20
+msgid "Title"
+msgstr "标题"
+
+#: bluelog/forms.py:31 bluelog/templates/admin/manage_post.html:21
+#: bluelog/templates/base.html:50 bluelog/templates/base.html:62
+#: bluelog/templates/blog/_posts.html:12 bluelog/templates/blog/post.html:21
+msgid "Category"
+msgstr "分类"
+
+#: bluelog/forms.py:32 bluelog/templates/admin/manage_comment.html:41
+msgid "Body"
+msgstr "内容"
+
+#: bluelog/forms.py:33 bluelog/forms.py:43 bluelog/forms.py:56
+#: bluelog/forms.py:72
+msgid "Submit"
+msgstr "提交"
+
+#: bluelog/forms.py:42 bluelog/forms.py:52
+#: bluelog/templates/admin/manage_category.html:17
+msgid "Name"
+msgstr "名称"
+
+#: bluelog/forms.py:47
+msgid "Name already in use."
+msgstr "该名称已使用"
+
+#: bluelog/forms.py:53 bluelog/templates/blog/post.html:93
+msgid "Email"
+msgstr "邮箱"
+
+#: bluelog/forms.py:54
+msgid "Site"
+msgstr "网址"
+
+#: bluelog/forms.py:55 bluelog/templates/base.html:64
+#: bluelog/templates/blog/post.html:57
+msgid "Comment"
+msgstr "评论"
+
+#: bluelog/forms.py:69 bluelog/templates/blog/index.html:8
+msgid "Blog Title"
+msgstr "博客标题"
+
+#: bluelog/forms.py:70
+msgid "Blog Sub Title"
+msgstr "博客子标题"
+
+#: bluelog/forms.py:71
+msgid "About Page"
+msgstr "关于页"
+
+#: bluelog/settings.py:58
+msgid "Perfect Blue"
+msgstr "日间模式"
+
+#: bluelog/settings.py:58
+msgid "Black Swan"
+msgstr "夜间模式"
+
+#: bluelog/blueprints/admin.py:42
+msgid "Settings Updated."
+msgstr "设置已更新。"
+
+#: bluelog/blueprints/admin.py:71
+msgid "Post created."
+msgstr "文章已创建。"
+
+#: bluelog/blueprints/admin.py:85
+msgid "Post update."
+msgstr "文章已更新。"
+
+#: bluelog/blueprints/admin.py:98
+msgid "Post deleted."
+msgstr "文章已删除。"
+
+#: bluelog/blueprints/admin.py:116
+msgid "Category created."
+msgstr "分类已创建。"
+
+#: bluelog/blueprints/admin.py:126
+msgid "You can not edit the default category."
+msgstr "不能编辑默认分类。"
+
+#: bluelog/blueprints/admin.py:131
+msgid "Category updated."
+msgstr "分类已更新。"
+
+#: bluelog/blueprints/admin.py:142
+msgid "You can not delete the default category."
+msgstr "不能删除默认分类。"
+
+#: bluelog/blueprints/admin.py:146
+msgid "Category deleted."
+msgstr "分类已删除。"
+
+#: bluelog/blueprints/admin.py:155 bluelog/templates/blog/post.html:120
+msgid "Comment disabled."
+msgstr "评论已禁用。"
+
+#: bluelog/blueprints/admin.py:158
+msgid "Comment enabled."
+msgstr "评论已启用。"
+
+#: bluelog/blueprints/admin.py:168 bluelog/blueprints/blog.py:98
+msgid "Comment published."
+msgstr "评论已发布。"
+
+#: bluelog/blueprints/admin.py:195
+msgid "Commit deleted."
+msgstr "评论已删除。"
+
+#: bluelog/blueprints/admin.py:208
+msgid "Image only!"
+msgstr "只能上传图片！"
+
+#: bluelog/blueprints/auth.py:36
+msgid "Welcome back."
+msgstr "欢迎回来。"
+
+#: bluelog/blueprints/auth.py:38
+msgid "Invalid username or password."
+msgstr "用户名或密码错误。"
+
+#: bluelog/blueprints/auth.py:40
+msgid "No account."
+msgstr "无此账号。"
+
+#: bluelog/blueprints/auth.py:47
+msgid "Logout success."
+msgstr "退出登录成功。"
+
+#: bluelog/blueprints/blog.py:100
+msgid "Thanks, your comment will be published after reviewed."
+msgstr "谢谢，您的评论将在审核后发布。"
+
+#: bluelog/templates/base.html:27 bluelog/templates/blog/index.html:4
+msgid "Home"
+msgstr "首页"
+
+#: bluelog/templates/base.html:28 bluelog/templates/blog/about.html:3
+#: bluelog/templates/blog/about.html:7
+msgid "About"
+msgstr "关于"
+
+#: bluelog/templates/base.html:33
+msgid "Theme"
+msgstr "主题"
+
+#: bluelog/templates/base.html:46
+msgid "New"
+msgstr "新增"
+
+#: bluelog/templates/admin/manage_comment.html:68
+#: bluelog/templates/base.html:49 bluelog/templates/base.html:61
+msgid "Post"
+msgstr "文章"
+
+#: bluelog/templates/base.html:55
+msgid "Manage"
+msgstr "管理"
+
+#: bluelog/templates/admin/settings.html:4
+#: bluelog/templates/admin/settings.html:8 bluelog/templates/base.html:71
+msgid "Settings"
+msgstr "设置"
+
+#: bluelog/templates/base.html:99
+msgid "Logout"
+msgstr "退出"
+
+#: bluelog/templates/auth/login.html:4 bluelog/templates/base.html:101
+msgid "Login"
+msgstr "登录"
+
+#: bluelog/templates/admin/edit_category.html:4
+#: bluelog/templates/admin/edit_category.html:8
+msgid "Edit Category"
+msgstr "编辑分类"
+
+#: bluelog/templates/admin/edit_post.html:4
+#: bluelog/templates/admin/edit_post.html:8
+msgid "Edit Post"
+msgstr "编辑文章"
+
+#: bluelog/templates/admin/manage_category.html:3
+msgid "Manage Categories"
+msgstr "管理分类"
+
+#: bluelog/templates/admin/manage_category.html:7
+#: bluelog/templates/blog/_sidebar.html:3
+msgid "Categories"
+msgstr "分类"
+
+#: bluelog/templates/admin/manage_category.html:9
+#: bluelog/templates/admin/new_category.html:4
+#: bluelog/templates/admin/new_category.html:8
+msgid "New Category"
+msgstr "新增分类"
+
+#: bluelog/templates/admin/manage_category.html:16
+#: bluelog/templates/admin/manage_comment.html:39
+#: bluelog/templates/admin/manage_post.html:19
+msgid "No."
+msgstr "序号"
+
+#: bluelog/templates/admin/manage_category.html:18
+#: bluelog/templates/admin/manage_post.html:8
+msgid "Posts"
+msgstr "文章"
+
+#: bluelog/templates/admin/manage_category.html:19
+#: bluelog/templates/admin/manage_comment.html:43
+#: bluelog/templates/admin/manage_post.html:25
+msgid "Actions"
+msgstr "操作"
+
+#: bluelog/templates/admin/manage_category.html:29
+#: bluelog/templates/admin/manage_post.html:37
+#: bluelog/templates/blog/post.html:12
+msgid "Edit"
+msgstr "编辑"
+
+#: bluelog/templates/admin/manage_category.html:32
+#: bluelog/templates/admin/manage_comment.html:71
+#: bluelog/templates/admin/manage_post.html:40
+#: bluelog/templates/blog/post.html:15 bluelog/templates/blog/post.html:96
+msgid "Are you sure?"
+msgstr "确定删除吗？"
+
+#: bluelog/templates/admin/manage_category.html:32
+#: bluelog/templates/admin/manage_comment.html:71
+#: bluelog/templates/admin/manage_post.html:40
+#: bluelog/templates/blog/post.html:15 bluelog/templates/blog/post.html:96
+msgid "Delete"
+msgstr "删除"
+
+#: bluelog/templates/admin/manage_category.html:39
+msgid "Tips: Deleting a category does not delete the article under that category."
+msgstr "小贴士：删除一个分类不会删除该分类下的文章。"
+
+#: bluelog/templates/admin/manage_category.html:40
+msgid "The articles under this category will be moved to the default category."
+msgstr "该分类下的文章将被转移到默认分类下。"
+
+#: bluelog/templates/admin/manage_category.html:42
+msgid "No Categories."
+msgstr "无分类信息。"
+
+#: bluelog/templates/admin/manage_comment.html:4
+msgid "Manage Comments"
+msgstr "管理评论"
+
+#: bluelog/templates/admin/manage_comment.html:8
+#: bluelog/templates/admin/manage_post.html:23
+#: bluelog/templates/blog/_posts.html:11 bluelog/templates/blog/post.html:49
+msgid "Comments"
+msgstr "评论"
+
+#: bluelog/templates/admin/manage_comment.html:13
+msgid "Filter"
+msgstr "筛选"
+
+#: bluelog/templates/admin/manage_comment.html:17
+msgid "ALL"
+msgstr "全部"
+
+#: bluelog/templates/admin/manage_comment.html:22
+msgid "Unread"
+msgstr "未读"
+
+#: bluelog/templates/admin/manage_comment.html:30
+msgid "Admin"
+msgstr "管理员"
+
+#: bluelog/templates/admin/manage_comment.html:40
+#: bluelog/templates/admin/manage_comment.html:56
+#: bluelog/templates/blog/post.html:76
+msgid "Author"
+msgstr "作者"
+
+#: bluelog/templates/admin/manage_comment.html:42
+#: bluelog/templates/admin/manage_post.html:22
+#: bluelog/templates/blog/post.html:22
+msgid "Date"
+msgstr "日期"
+
+#: bluelog/templates/admin/manage_comment.html:65
+msgid "Approve"
+msgstr "通过"
+
+#: bluelog/templates/admin/manage_post.html:4
+msgid "Manage Posts"
+msgstr "管理文章"
+
+#: bluelog/templates/admin/manage_post.html:11
+#: bluelog/templates/admin/new_post.html:4
+#: bluelog/templates/admin/new_post.html:8
+msgid "New Post"
+msgstr "新增文章"
+
+#: bluelog/templates/admin/manage_post.html:24
+msgid "Words"
+msgstr "字数"
+
+#: bluelog/templates/admin/manage_post.html:48
+msgid "No posts."
+msgstr "无文章信息。"
+
+#: bluelog/templates/blog/_posts.html:8
+msgid "Read More"
+msgstr "更多"
+
+#: bluelog/templates/blog/_posts.html:21
+msgid "No posts yet."
+msgstr "无文章信息。"
+
+#: bluelog/templates/blog/_posts.html:23
+msgid "Write Now"
+msgstr "写文章"
+
+#: bluelog/templates/blog/index.html:9
+msgid "Blog Subtitle"
+msgstr "博客子标题"
+
+#: bluelog/templates/blog/post.html:29
+msgid "Share"
+msgstr "分享"
+
+#: bluelog/templates/blog/post.html:34
+msgid "Permalink"
+msgstr "链接"
+
+#: bluelog/templates/blog/post.html:57
+msgid "Disable"
+msgstr "禁用"
+
+#: bluelog/templates/blog/post.html:57
+msgid "Enable"
+msgstr "启用"
+
+#: bluelog/templates/blog/post.html:79 bluelog/templates/blog/post.html:91
+msgid "Reply"
+msgstr "回复"
+
+#: bluelog/templates/blog/post.html:104
+msgid "No comments"
+msgstr "无评论信息"
+
+#: bluelog/templates/blog/post.html:111
+#, python-format
+msgid "Reply to <strong>%(author)s</strong>"
+msgstr "回复 <strong>%(author)s</strong>"
+
+#: bluelog/templates/blog/post.html:112
+msgid "Cancel"
+msgstr "取消"
+
+#: bluelog/templates/errors/400.html:3 bluelog/templates/errors/400.html:7
+msgid "400 Error"
+msgstr "400错误"
+
+#: bluelog/templates/errors/400.html:11
+msgid "Bad Request"
+msgstr "非法请求"
+
+#: bluelog/templates/errors/404.html:3 bluelog/templates/errors/404.html:7
+msgid "404 Error"
+msgstr "404错误"
+
+#: bluelog/templates/errors/404.html:11
+msgid "Page Not Found"
+msgstr "找不到页面"
+
+#: bluelog/templates/errors/500.html:3 bluelog/templates/errors/500.html:7
+msgid "500 Error"
+msgstr "500错误"
+
+#: bluelog/templates/errors/500.html:11
+msgid "Internal Server Error"
+msgstr "内部服务器错误"
+

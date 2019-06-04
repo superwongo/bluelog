@@ -9,6 +9,7 @@
 """
 
 import click
+import os
 
 from bluelog.extensions import db
 from bluelog.models import Admin, Category
@@ -40,13 +41,13 @@ def register_commands(app):
         click.echo('Generating the administrator...')
         fake_admin()
 
-        click.echo('Generating %d categories...' % category)
+        click.echo(f'Generating {category} categories...')
         fake_categories(category)
 
-        click.echo('Generating %d posts...' % post)
+        click.echo(f'Generating {post} posts...')
         fake_posts(post)
 
-        click.echo('Generating %d comments...' % comment)
+        click.echo(f'Generating {comment} comments...')
         fake_comments(comment)
 
         click.echo('Done.')
@@ -69,18 +70,52 @@ def register_commands(app):
         else:
             click.echo('Creating the temporary administrator account...')
             admin = Admin(username=username,
-                          blog_title='Bluelog',
-                          blog_sub_title="No, I'm the real thing.",
+                          blog_title='部落格',
+                          blog_sub_title="做真实的自己",
                           name='Admin',
-                          about='Anything about you.')
+                          about='关于我的一些事情。')
             admin.set_password(password)
             db.session.add(admin)
 
         category = Category.query.first()
         if category is None:
             click.echo('Creating the default category...')
-            category = Category(name='Default')
+            category = Category(name='默认')
             db.session.add(category)
 
         db.session.commit()
         click.echo('Done.')
+
+    @app.cli.group()
+    def translate():
+        """翻译命令组"""
+        pass
+
+    @translate.command()
+    @click.argument('lang')
+    def init(lang):
+        """
+        初始化新语言
+        :param lang: 语言代码
+        :return:
+        """
+        if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
+            raise RuntimeError('extract命令失败')
+        if os.system('pybabel init -i messages.pot -d bluelog/translations -l ' + lang):
+            raise RuntimeError('init命令失败')
+        os.remove('messages.pot')
+
+    @translate.command()
+    def update():
+        """更新子命令"""
+        if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
+            raise RuntimeError('extract命令失败')
+        if os.system('pybabel update -i messages.pot -d bluelog/translations'):
+            raise RuntimeError('update命令失败')
+        os.remove('messages.pot')
+
+    @translate.command()
+    def compile():
+        """编译子命令"""
+        if os.system('pybabel compile -d bluelog/translations'):
+            raise RuntimeError('compile命令失败')

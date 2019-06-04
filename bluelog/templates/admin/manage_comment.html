@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Manage Comments{% endblock %}
+{% block title %}{{ _('Manage Comments') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Comments
+        <h1>{{ _('Comments') }}
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a href="#" class="nav-link disabled">Filter</a>
+                <a href="#" class="nav-link disabled">{{ _('Filter') }}</a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('admin.manage_comment', filter='all') }}" class="nav-link {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}">
-                    ALL
+                    {{ _('ALL') }}
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('admin.manage_comment', filter='unread') }}" class="nav-link {% if request.args.get('filter') == 'unread' %}active{% endif %}">
-                    Unread
+                    {{ _('Unread') }}
                     {% if unread_comments %}
                         <span class="badge badge-success">{{ unread_comments }}</span>
                     {% endif %}
@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url_for('admin.manage_comment', filter='admin') }}" class="nav-link {% if request.args.get('filter') == 'admin' %}active{% endif %}">
-                    Admin
+                    {{ _('Admin') }}
                 </a>
             </li>
         </ul>
@@ -36,11 +36,11 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Author</th>
-                    <th>Body</th>
-                    <th>Date</th>
-                    <th>Actions</th>
+                    <th>{{ _('No.') }}</th>
+                    <th>{{ _('Author') }}</th>
+                    <th>{{ _('Body') }}</th>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Actions') }}</th>
                 </tr>
             </thead>
             {% for comment in comments %}
@@ -53,7 +53,7 @@
                         {% endif %}
                         <a href="mailto:{{ comment.email }}">{{ comment.email }}</a>
                         {% if comment.from_admin %}
-                            <span class="badge badge-primary">Author</span>
+                            <span class="badge badge-primary">{{ _('Author') }}</span>
                         {% endif %}
                     </td>
                     <td>{{ comment.body }}</td>
@@ -62,13 +62,13 @@
                         {% if not comment.reviewed %}
                             <form class="inline" method="post" action="{{ url_for('.approve_comment', comment_id=comment.id, next=request.full_path) }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                <button type="submit" class="btn btn-success btn-sm">{{ _('Approve') }}</button>
                             </form>
                         {% endif %}
-                        <a class="btn btn-info btn-sm" href="{{ url_for('blog.show_post', post_id=comment.post.id) }}">Post</a>
+                        <a class="btn btn-info btn-sm" href="{{ url_for('blog.show_post', post_id=comment.post.id) }}">{{ _('Post') }}</a>
                         <form class="inline" method="post" action="{{ url_for('.delete_comment', comment_id=comment.id, next=request.full_path) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ _('Are you sure?') }}');">{{ _('Delete') }}</button>
                         </form>
                     </td>
                 </tr>

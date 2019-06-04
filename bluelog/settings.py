@@ -11,6 +11,8 @@
 import os
 import sys
 
+from flask_babel import lazy_gettext as _l
+
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # SQLite URI compatible
@@ -53,11 +55,17 @@ class BaseConfig(object):
     BLUELOG_MANAGE_POST_PER_PAGE = 15
     BLUELOG_COMMENT_PER_PAGE = 15
     # ('theme name', 'display name')
-    BLUELOG_THEMES = {'perfect_blue': 'Perfect Blue', 'black_swan': 'Black Swan'}
+    BLUELOG_THEMES = {'perfect_blue': _l('Perfect Blue'), 'black_swan': _l('Black Swan')}
     BLUELOG_SLOW_QUERY_THRESHOLD = 1
 
     BLUELOG_UPLOAD_PATH = os.path.join(basedir, 'uploads')
     BLUELOG_ALLOWED_IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
+
+    # ----------国际化、本地化配置------- #
+    # 支持语言列表
+    LANGUAGES = ['en', 'zh_CN']
+    # 默认本地语言
+    BABEL_DEFAULT_LOCALE = 'zh_CN'
 
 
 class DevelopmentConfig(BaseConfig):

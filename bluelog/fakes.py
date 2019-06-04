@@ -16,25 +16,25 @@ from faker import Faker
 from bluelog.models import Admin, Category, Post, Comment
 from bluelog.extensions import db
 
-fake = Faker()
+fake = Faker(locale='zh_CN')
 
 
 def fake_admin():
     admin = Admin(
         username='admin',
-        blog_title='Blueblog',
-        blog_sub_title="No, I'm the real thing.",
+        blog_title='部落格',
+        blog_sub_title='做真实的自己',
         name='Super Wong',
-        about='Um, I, Super Wong, had a fun time as member of CHAM...',
+        about='我就是我，是不一样的烟火！',
     )
-    admin.set_password('helloflask')
+    admin.set_password('admin123')
     db.session.add(admin)
     db.session.commit()
 
 
 def fake_categories(count=10):
     """虚拟分类"""
-    category = Category(name='Default')
+    category = Category(name='默认')
     db.session.add(category)
 
     for i in range(count):

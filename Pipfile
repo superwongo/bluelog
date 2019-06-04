@@ -18,6 +18,7 @@ flask-wtf = "*"
 bootstrap-flask = "*"
 flask-login = "*"
 flask-migrate = "*"
+flask-babel = "*"
 
 [requires]
 python_version = "3.6"

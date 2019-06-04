@@ -12,6 +12,7 @@ from threading import Thread
 
 from flask import url_for, current_app
 from flask_mail import Message
+from flask_babel import _
 
 from bluelog.extensions import mail
 
@@ -33,25 +34,25 @@ def send_async_mail(subject, to, html):
 
 def send_new_comment_email(post):
     post_url = url_for('blog.show_post', post_id=post.id, _external=True) + '#comments'
-    send_async_mail(subject='New comment',
+    send_async_mail(subject=_('New comment'),
                     to=current_app.config['BLUELOG_ADMIN_EMAIL'],
-                    html=f"""
-                             <p>New comment in post <i>{post.title}</i>, click the link below to check:</p>
-                             <p><a href="{post_url}">{post_url}</a></p>
+                    html=_("""
+                             <p>New comment in post <i>%(title)s</i>, click the link below to check:</p>
+                             <p><a href="%(url)s">%(url)s</a></p>
                              <p><small style="color: #868e96">Do not reply this email.</small></p>
-                         """
+                         """, title=post.title, url=post_url )
                     )
 
 
 def send_new_reply_email(comment):
     post_url = url_for('blog.show_post', post_id=comment.post_id, _external=True) + '#comments'
-    send_async_mail(subject='New reply',
+    send_async_mail(subject=_('New reply'),
                     to=comment.email,
-                    html=f"""
+                    html=_("""
                               <p>New reply for the comment you left in post 
-                                  <i>{comment.post.title}</i>, click the link below to check:
+                                  <i>%(title)s</i>, click the link below to check:
                               </p>
-                              <p><a href="{post_url}">{post_url}</a></p>
+                              <p><a href="%(url)s">%(url)s</a></p>
                               <p><small style="color: #868e96">Do not reply this email.</small></p>
-                          """
+                          """, title=comment.post.title, url=post_url)
                     )

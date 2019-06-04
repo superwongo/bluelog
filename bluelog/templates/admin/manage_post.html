@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% from 'bootstrap/pagination.html' import render_pagination %}
 
-{% block title %}Manage Posts{% endblock %}
+{% block title %}{{ _('Manage Posts') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Posts
+        <h1>{{ _('Posts') }}
             <small class="text-muted">{{ pagination.total }}</small>
             <span class="float-right">
-                <a href="{{ url_for('.new_post') }}" class="btn btn-primary btn-sm">New Post</a>
+                <a href="{{ url_for('.new_post') }}" class="btn btn-primary btn-sm">{{ _('New Post') }}</a>
             </span>
         </h1>
     </div>
@@ -16,13 +16,13 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Date</th>
-                    <th>Comments</th>
-                    <th>Words</th>
-                    <th>Actions</th>
+                    <th>{{ _('No.') }}</th>
+                    <th>{{ _('Title') }}</th>
+                    <th>{{ _('Category') }}</th>
+                    <th>{{ _('Date') }}</th>
+                    <th>{{ _('Comments') }}</th>
+                    <th>{{ _('Words') }}</th>
+                    <th>{{ _('Actions') }}</th>
                 </tr>
             </thead>
             {% for post in posts %}
@@ -34,10 +34,10 @@
                 <td><a href="{{ url_for('blog.show_post', post_id=post.id) + '#comments' }}">{{ post.comments | length }}</a></td>
                 <td>{{ post.body | length }}</td>
                 <td>
-                    <a href="{{ url_for('.edit_post', post_id=post.id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ url_for('.edit_post', post_id=post.id) }}" class="btn btn-info btn-sm">{{ _('Edit') }}</a>
                     <form action="{{ url_for('.delete_post', post_id=post.id, next=request.full_path) }}" class="inline" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+                        <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('{{ _('Are you sure?') }}');">{{ _('Delete') }}</button>
                     </form>
                 </td>
             </tr>
@@ -45,6 +45,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination) }}</div>
     {% else %}
-        <div class="tip"><h5>No posts.</h5></div>
+        <div class="tip"><h5>{{ _('No posts.') }}</h5></div>
     {% endif %}
 {% endblock %}

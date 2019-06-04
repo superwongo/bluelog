@@ -12,12 +12,13 @@ import os
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, g
 from flask_wtf.csrf import CSRFError
 from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
+from flask_babel import lazy_gettext as _l
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
@@ -67,6 +68,22 @@ def register_extensions(app):
     login_manager.init_app(app)
     csrf.init_app(app)
     migrate.init_app(app, db)
+    babel.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        """加载登录用户"""
+        user = Admin.query.get(int(user_id))
+        return user
+
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = _l(login_manager.login_message)
+    login_manager.login_message_category = 'warning'
+
+    @babel.localeselector
+    def get_locale():
+        """获取本地语言环境"""
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 def register_logging(app):
@@ -98,7 +115,7 @@ def register_logging(app):
         mailhost=app.config['MAIL_SERVER'],
         fromaddr=app.config['MAIL_USERNAME'],
         toaddrs=['ADMIN_EMAIL'],
-        subject='Bluelog Application Error',
+        subject=_l('Bluelog Application Error'),
         credentials=(app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD']))
     mail_handler.setLevel(logging.ERROR)
     mail_handler.setFormatter(request_formatter)
@@ -156,8 +173,19 @@ def register_errors(app):
 
 
 def register_request_handlers(app):
+    @app.before_request
+    def before_request():
+        """请求前周期函数"""
+        # ----------设置本地语言环境参数---------- #
+        from flask_babel import get_locale
+        locale = get_locale()
+        language = locale.language + '-' + locale.territory if locale.territory else locale.language
+        g.locale = language
+
     @app.after_request
-    def query_profiler(response):
+    def after_request(response):
+        """请求后周期函数"""
+        # ---------请求时间较长操作登记日志---------- #
         for q in get_debug_queries():
             if q.duration >= app.config['BLUELOG_SLOW_QUERY_THRESHOLD']:
                 app.logger.warning(

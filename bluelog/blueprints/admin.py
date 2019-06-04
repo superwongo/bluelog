@@ -13,6 +13,7 @@ import os
 from flask import Blueprint, render_template, request, current_app, flash, redirect, url_for, send_from_directory
 from flask_login import login_required, current_user
 from flask_ckeditor import upload_success, upload_fail
+from flask_babel import _
 
 from bluelog.models import Post, Category, Comment
 from bluelog.forms import PostForm, CategoryForm, SettingsForm
@@ -38,7 +39,7 @@ def settings():
         current_user.blog_sub_title = form.blog_sub_title.data
         current_user.about = form.about.data
         db.session.commit()
-        flash('Settings Updated.', 'success')
+        flash(_('Settings Updated.'), 'success')
         return redirect(url_for('blog.index'))
     form.name.data = current_user.name
     form.blog_title.data = current_user.blog_title
@@ -67,7 +68,7 @@ def new_post():
         post = Post(title=title, body=body, category=category)
         db.session.add(post)
         db.session.commit()
-        flash('Post created.', 'success')
+        flash(_('Post created.'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     return render_template('admin/new_post.html', form=form)
 
@@ -81,7 +82,7 @@ def edit_post(post_id):
         post.body = form.body.data
         post.category = Category.query.get(form.category.data)
         db.session.commit()
-        flash('Post update.', 'success')
+        flash(_('Post update.'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     form.title.data = post.title
     form.body.data = post.body
@@ -94,7 +95,7 @@ def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
-    flash('Post deleted.', 'success')
+    flash(_('Post deleted.'), 'success')
     return redirect_back()
 
 
@@ -112,7 +113,7 @@ def new_category():
         category = Category(name=name)
         db.session.add(category)
         db.session.commit()
-        flash('Category created.', 'success')
+        flash(_('Category created.'), 'success')
         return redirect(url_for('.manage_category'))
     return render_template('admin/new_category.html', form=form)
 
@@ -122,12 +123,12 @@ def edit_category(category_id):
     category = Category.query.get_or_404(category_id)
     form = CategoryForm()
     if category.id == 1:
-        flash('You can not edit the default category.', 'warning')
+        flash(_('You can not edit the default category.'), 'warning')
         return redirect(url_for('blog.index'))
     if form.validate_on_submit():
         category.name = form.name.data
         db.session.commit()
-        flash('Category updated.', 'success')
+        flash(_('Category updated.'), 'success')
         return redirect(url_for('.manage_category'))
 
     form.name.data = category.name
@@ -138,11 +139,11 @@ def edit_category(category_id):
 def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
     if category.id == 1:
-        flash('You can not delete the default category.', 'warning')
+        flash(_('You can not delete the default category.'), 'warning')
         return redirect(url_for('blog.index'))
     # 调用category对象的delete()方法删除分类
     category.delete()
-    flash('Category deleted.', 'success')
+    flash(_('Category deleted.'), 'success')
     return redirect(url_for('.manage_category'))
 
 
@@ -151,10 +152,10 @@ def set_comment(post_id):
     post = Post.query.get_or_404(post_id)
     if post.can_comment:
         post.can_comment = False
-        flash('Comment disabled.', 'info')
+        flash(_('Comment disabled.'), 'info')
     else:
         post.can_comment = True
-        flash('Comment enabled.', 'info')
+        flash(_('Comment enabled.'), 'info')
     db.session.commit()
     return redirect(url_for('blog.show_post', post_id=post_id))
 
@@ -164,7 +165,7 @@ def approve_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.reviewed = True
     db.session.commit()
-    flash('Comment published.', 'success')
+    flash(_('Comment published.'), 'success')
     return redirect_back()
 
 
@@ -191,7 +192,7 @@ def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
     db.session.commit()
-    flash('Commit deleted.', 'success')
+    flash(_('Commit deleted.'), 'success')
     return redirect_back()
 
 
@@ -204,7 +205,7 @@ def get_image(filename):
 def upload_image():
     f = request.files.get('upload')
     if not allowed_file(f.filename):
-        return upload_fail('Image only!')
+        return upload_fail(_('Image only!'))
     f.save(os.path.join(current_app.config['BLUELOG_UPLOAD_PATH'], f.filename))
     url = url_for('.get_image', filename=f.filename)
     return upload_success(url, f.filename)

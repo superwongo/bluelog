@@ -10,6 +10,7 @@
 
 from flask import Blueprint, render_template, request, current_app, url_for, flash, redirect, abort, make_response
 from flask_login import current_user
+from flask_babel import _
 
 from bluelog.models import Post, Category, Comment
 from bluelog.forms import AdminCommentForm, CommentForm
@@ -94,9 +95,9 @@ def show_post(post_id):
 
         # 根据登录状态显示不同的提示信息
         if current_user.is_authenticated:
-            flash('Comment published.', 'success')
+            flash(_('Comment published.'), 'success')
         else:
-            flash('Thanks, your comment will be published after reviewed.', 'info')
+            flash(_('Thanks, your comment will be published after reviewed.'), 'info')
             # 发送提醒邮件给管理员
             send_new_comment_email(post)
         return redirect(url_for('.show_post', post_id=post.id))

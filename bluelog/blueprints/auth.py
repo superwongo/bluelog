@@ -10,6 +10,7 @@
 
 from flask import Blueprint, redirect, url_for, flash, render_template
 from flask_login import current_user, login_user, logout_user
+from flask_babel import _
 
 from bluelog.forms import LoginForm
 from bluelog.models import Admin
@@ -32,16 +33,16 @@ def login():
         if admin:
             if username == admin.username and admin.validate_password(password):
                 login_user(admin, remember)
-                flash('Welcome back.', 'info')
+                flash(_('Welcome back.'), 'info')
                 return redirect_back()
-            flash('Invalid username or password.', 'warning')
+            flash(_('Invalid username or password.'), 'warning')
         else:
-            flash('No account.', 'warning')
+            flash(_('No account.'), 'warning')
     return render_template('auth/login.html', form=form)
 
 
 @bp.route('/logout')
 def logout():
     logout_user()
-    flash('Logout success.', 'info')
+    flash(_('Logout success.'), 'info')
     return redirect_back()
