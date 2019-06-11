@@ -1,9 +1,30 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Index from '@/views/Index'
+import Home from '@/views/home'
+import About from '@/views/about'
 
 Vue.use(Router)
 
-let routes = []
+const IndexRoute = {
+  path: '/',
+  component: Index,
+  // redirect: '/home',
+  children: [
+    {
+      path: 'home',
+      component: Home
+    },
+    {
+      path: 'about',
+      component: About
+    }
+  ]
+}
+
+let routes = [
+  IndexRoute
+]
 
 const routerContext = require.context('./', true, /index\.js$/)
 routerContext.keys().forEach(route => {
