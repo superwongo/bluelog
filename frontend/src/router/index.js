@@ -9,7 +9,7 @@ Vue.use(Router)
 const IndexRoute = {
   path: '/',
   component: Index,
-  // redirect: '/home',
+  redirect: '/home',
   children: [
     {
       path: 'home',

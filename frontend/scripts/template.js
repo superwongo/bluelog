@@ -5,11 +5,13 @@ module.exports = {
     ${compoenntName}组件
   </div>
 </template>
+
 <script>
 export default {
-  name: "${compoenntName}"
+  name: '${compoenntName}'
 }
 </script>
+
 <style lang="scss" scoped>
 .${compoenntName} {
 
