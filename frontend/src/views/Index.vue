@@ -1,17 +1,19 @@
 <template>
-  <div class="Index">
+  <div class="index">
     <el-container>
       <el-header>
         <Header/>
       </el-header>
-      <el-main>
-        <router-view :key="key"/>
-      </el-main>
+      <el-scrollbar>
+        <el-main>
+          <router-view :key="key"/>
+        </el-main>
+      </el-scrollbar>
       <el-footer>
         <Footer/>
       </el-footer>
-      <el-backtop target=".el-container .is-vertical"></el-backtop>
     </el-container>
+    <el-backtop/>
   </div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Index{
+.index{
   .el-container {
     margin-bottom: 40px;
     .el-header {

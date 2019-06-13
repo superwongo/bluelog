@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import Home from '@/views/home'
-import About from '@/views/about'
+import Home from '@/views/Home'
+import About from '@/views/About'
 
 Vue.use(Router)
 
