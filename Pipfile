@@ -19,6 +19,8 @@ bootstrap-flask = "*"
 flask-login = "*"
 flask-migrate = "*"
 flask-babel = "*"
+flask-restful = "*"
+flask-apispec = "*"
 
 [requires]
 python_version = "3.6"

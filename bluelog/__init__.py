@@ -18,10 +18,11 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_babel import lazy_gettext as _l
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel, api
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
+from bluelog import apis
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -69,6 +70,9 @@ def register_extensions(app):
     csrf.init_app(app)
     migrate.init_app(app, db)
     babel.init_app(app)
+    api.init_app(app)
+    # 取消api蓝本的csrf验证
+    csrf.exempt(apis.bp)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -130,6 +134,8 @@ def register_blueprints(app):
     app.register_blueprint(blog.bp)
     app.register_blueprint(admin.bp, url_prefix='/admin')
     app.register_blueprint(auth.bp, url_prefix='/auth')
+    app.register_blueprint(apis.bp, url_prefix='/api')
+    # app.register_blueprint(apis.bp, subdomain='api')
 
 
 def register_shell_context(app):
