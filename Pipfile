@@ -19,7 +19,6 @@ bootstrap-flask = "*"
 flask-login = "*"
 flask-migrate = "*"
 flask-babel = "*"
-flask-restful = "*"
 flask-apispec = "*"
 
 [requires]

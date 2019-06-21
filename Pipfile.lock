@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "8a1f93cd8a122c9aef77508b5dd056139620c9070a1bf1df00ad46f471916d51"
+            "sha256": "365b22eaf6ada59975eda8da47b9df57bd8d792c0eadce28695f2aed4f0a56e7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -21,13 +21,6 @@
                 "sha256:828dcaa922155a2b7166c4f36ec45268944e4055c86499bd14319b4c8c0094b7"
             ],
             "version": "==1.0.10"
-        },
-        "aniso8601": {
-            "hashes": [
-                "sha256:513d2b6637b7853806ae79ffaca6f3e8754bdd547048f5ccc1420aec4b714f1e",
-                "sha256:d10a4bf949f619f719b227ef5386e31f49a2b6d453004b21f02661ccc8670c7b"
-            ],
-            "version": "==7.0.0"
         },
         "apispec": {
             "hashes": [
@@ -127,19 +120,11 @@
         },
         "flask-moment": {
             "hashes": [
-                "sha256:5ff8a73487e2e11913718b6a972814a130b4aa454198195b2004b71b3a2c07b7",
-                "sha256:8379acdc9cda1227573ae52aac2e5b4b391e77ed300c70d49b0a929d0aa76680"
+                "sha256:bcdc49734a37e4411868436fcde326520e5012b14948cb1766f42e1e6d95f632",
+                "sha256:cef39ab9a0fd55aa4142c0292a6cb0661547cf17ac13cf2d3cafbec1d1a95931"
             ],
             "index": "pypi",
-            "version": "==0.7.0"
-        },
-        "flask-restful": {
-            "hashes": [
-                "sha256:ecd620c5cc29f663627f99e04f17d1f16d095c83dc1d618426e2ad68b03092f8",
-                "sha256:f8240ec12349afe8df1db168ea7c336c4e5b0271a36982bff7394f93275f2ca9"
-            ],
-            "index": "pypi",
-            "version": "==0.3.7"
+            "version": "==0.8.0"
         },
         "flask-sqlalchemy": {
             "hashes": [
@@ -226,11 +211,11 @@
         },
         "python-dotenv": {
             "hashes": [
-                "sha256:debd928b49dbc2bf68040566f55cdb3252458036464806f4094487244e2a4093",
-                "sha256:f157d71d5fec9d4bd5f51c82746b6344dffa680ee85217c123f4a0c8117c4544"
+                "sha256:156f218846bd90e0d537915545cde4a987947c2cecc628b50f9955fdde72534a",
+                "sha256:6640acd76e6cab84648e4fec16c9d19de6700971f9d91d045e7120622167bfda"
             ],
             "index": "pypi",
-            "version": "==0.10.3"
+            "version": "==0.10.2"
         },
         "python-editor": {
             "hashes": [

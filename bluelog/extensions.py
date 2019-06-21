@@ -17,7 +17,7 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_babel import Babel
-from flask_restful import Api
+from flask_apispec import FlaskApiSpec
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -28,6 +28,6 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 migrate = Migrate()
 babel = Babel()
-api = Api()
+api_doc = FlaskApiSpec()
 
 from bluelog.models import *

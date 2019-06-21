@@ -12,6 +12,10 @@ import os
 import sys
 
 from flask_babel import lazy_gettext as _l
+from apispec import APISpec
+from apispec.ext.marshmallow import MarshmallowPlugin
+
+from bluelog.apis.parser import parser
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -67,9 +71,19 @@ class BaseConfig(object):
     # 默认本地语言
     BABEL_DEFAULT_LOCALE = 'zh_CN'
 
+    # -----------API接口解析器-------------- #
+    APISPEC_WEBARGS_PARSER = parser
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = prefix + os.path.join(basedir, 'data-dev.sqlite3')
+    APISPEC_SPEC = APISpec(
+        title='RESTFUL API',
+        version='v1',
+        openapi_version='3.0.2',
+        plugins=[MarshmallowPlugin()],
+    )
+    APISPEC_SWAGGER_URL = '/swagger/'
 
 
 class TestingConfig(BaseConfig):

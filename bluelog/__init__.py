@@ -18,7 +18,7 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_babel import lazy_gettext as _l
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel, api
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel, api_doc
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
@@ -50,6 +50,8 @@ def create_app(config_name=None):
     register_commands(app)
     # 注册请求处理函数
     register_request_handlers(app)
+    # 注册API文档
+    register_api_doc(app)
 
     try:
         if app.config['BLUELOG_UPLOAD_PATH']:
@@ -70,7 +72,6 @@ def register_extensions(app):
     csrf.init_app(app)
     migrate.init_app(app, db)
     babel.init_app(app)
-    api.init_app(app)
     # 取消api蓝本的csrf验证
     csrf.exempt(apis.bp)
 
@@ -198,6 +199,18 @@ def register_request_handlers(app):
                     'Slow query: Duration: %fs\n Context: %s\nQuery: %s\n ' % (q.duration, q.context, q.statement)
                 )
         return response
+
+
+def register_api_doc(app):
+    from bluelog.apis.resources import PostResource, PostListResource, CategoryListResource, CategoryResource, \
+        CommentListResource, CommentResource
+    api_doc.init_app(app)
+    api_doc.register(PostListResource, endpoint='api.posts')
+    api_doc.register(PostResource, endpoint='api.post')
+    api_doc.register(CategoryListResource, endpoint='api.categories')
+    api_doc.register(CategoryResource, endpoint='api.category')
+    api_doc.register(CommentListResource, endpoint='api.comments')
+    api_doc.register(CommentResource, endpoint='api.comment')
 
 
 from bluelog.models import *

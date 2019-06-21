@@ -8,51 +8,53 @@
 @detail: 资源
 """
 
-from flask import current_app, url_for, jsonify
-from flask_restful import Resource, marshal_with, marshal
+from flask import jsonify
+from flask_apispec.views import MethodResource
+from flask_apispec import marshal_with, Ref, use_kwargs, doc
 
 from bluelog.extensions import db
-from .serializers import serializer_post, serializer_category, ModelSerializer
-from .parsers import parser_post, parser_category
+from .schemas import PostSchema, CategorySchema, CommentSchema
+from .utils import make_pagination
 
 
-class PostListResource(Resource):
-    parser = parser_post()
+@doc(
+    tags=Ref('tags'),
+    params=Ref('params')
+)
+@marshal_with(Ref('schema'))
+class BaseResource(MethodResource):
+    schema = None
+    tags = None
+    params = None
 
-    # @marshal_with(posts_fields, envelope='resource')
+
+class PostListResource(BaseResource):
+    schema = PostSchema
+    tags = ['posts']
+
     def get(self):
-        # return Post.query.all()
-        args = self.parser.parse_args()
-        page = args['page'] or 1
-        pagination = Post.query.paginate(page, per_page=current_app.config['BLUELOG_POST_PER_PAGE'])
-        items = pagination.items
-        current = url_for('api.posts', page=page, _external=True)
-        prev = url_for('api.posts', page=page-1, _external=True) if pagination.has_prev else None
-        next = url_for('api.posts', page=page+1, _external=True) if pagination.has_next else None
-        return jsonify({
-            'items': marshal(items, serializer_post, envelope='resource'),
-            'current': current,
-            'prev': prev,
-            'next': next
-        })
+        queryset = Post.query
+        return make_pagination(queryset, 'api.posts', self.schema)
 
-    def post(self):
-        args = self.parser.parse_args()
-        post = Post(
-            title=args['title'],
-            category=Category.query.get(args['category_id']),
-            body=args['body']
-        )
+    @use_kwargs(Ref('schema'))
+    def post(self, **kwargs):
+        if not kwargs.get('is_valid', True):
+            return jsonify(kwargs['error'].message), 422
+        post = Post()
+        for key, value in kwargs.items():
+            setattr(post, key, value)
         db.session.add(post)
         db.session.commit()
         return post, 201
 
 
-class PostResource(Resource):
-    from bluelog.models import Post
-    serializer_pos_test = ModelSerializer(Post, depth=1).serializer_result()
+class PostResource(BaseResource):
+    schema = PostSchema
+    tags = ['posts']
+    params = {
+        'post_id': {'description': '文章ID'}
+    }
 
-    @marshal_with(serializer_pos_test, envelope='resource')
     def get(self, post_id):
         post = Post.query.get_or_404(post_id)
         return post
@@ -61,34 +63,42 @@ class PostResource(Resource):
         post = Post.query.get_or_404(post_id)
         db.session.delete(post)
         db.session.commit()
-        return '', 204
+        return None, 204
 
-    def put(self, post_id):
+    @use_kwargs(Ref('schema'))
+    def put(self, post_id, **kwargs):
         post = Post.query.get_or_404(post_id)
-        args = self.parser.parse_args()
-        if args['title']:
-            post.name = args['title']
-        if args['category_id']:
-            post.category = Category.query.get(args['category_id'])
-        if args['body']:
-            post.body = args['body']
+        for key, value in kwargs.items():
+            setattr(post, key, value)
         db.session.commit()
-        return post, 201
+        return post
 
 
-class CategoryListResource(Resource):
-    @marshal_with(serializer_category, envelope='resource')
+class CategoryListResource(BaseResource):
+    schema = CategorySchema
+    tags = ['categories']
+
+    @marshal_with(CategorySchema(many=True))
     def get(self):
         return Category.query.all()
 
-    def post(self):
-        return '', 201
+    @use_kwargs(Ref('schema'))
+    def post(self, **kwargs):
+        category = Category()
+        for key, value in kwargs.items():
+            setattr(category, key, value)
+        db.session.add(category)
+        db.session.commit()
+        return category, 201
 
 
-class CategoryResource(Resource):
-    parser = parser_category()
+class CategoryResource(BaseResource):
+    schema = CategorySchema
+    tags = ['categories']
+    params = {
+        'category_id': {'description': '分类ID'}
+    }
 
-    @marshal_with(serializer_category, envelope='resource')
     def get(self, category_id):
         category = Category.query.get_or_404(category_id)
         return category
@@ -99,14 +109,57 @@ class CategoryResource(Resource):
         db.session.commit()
         return '', 204
 
-    def put(self, category_id):
+    @use_kwargs(Ref('schema'))
+    def put(self, category_id, **kwargs):
         category = Category.query.get_or_404(category_id)
-        args = self.parser.parse_args()
-        if args['name']:
-            category.name = args['name']
+        for key, value in kwargs.items():
+            setattr(category, key, value)
         db.session.commit()
-        return category, 201
+        return category
 
 
-from bluelog.models import Post, Category
+class CommentListResource(BaseResource):
+    schema = CommentSchema
+    tags = ['comments']
 
+    def get(self):
+        queryset = Comment.query
+        return make_pagination(queryset, 'api.comments', self.schema)
+
+    @use_kwargs(Ref('schema'))
+    def post(self, **kwargs):
+        comment = Comment()
+        for key, value in kwargs.items():
+            setattr(comment, key, value)
+        db.session.add(comment)
+        db.session.commit()
+        return comment, 201
+
+
+class CommentResource(BaseResource):
+    schema = CommentSchema
+    tags = ['comments']
+    params = {
+        'comment_id': {'description': '评论ID'}
+    }
+
+    def get(self, comment_id):
+        comment = Comment.query.get_or_404(comment_id)
+        return comment
+
+    def delete(self, comment_id):
+        comment = Comment.query.get_or_404(comment_id)
+        db.session.delete(comment)
+        db.session.commit()
+        return '', 204
+
+    @use_kwargs(Ref('schema'))
+    def put(self, comment_id, **kwargs):
+        comment = Comment.query.get_or_404(comment_id)
+        for key, value in kwargs.items():
+            setattr(comment, key, value)
+        db.session.commit()
+        return comment
+
+
+from bluelog.models import Post, Category, Comment
