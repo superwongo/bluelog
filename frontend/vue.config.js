@@ -3,6 +3,23 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const path = require('path')
 
 module.exports = {
+  // css: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data: `@import '~styles/var.scss';
+  //       @import '~styles/mixin.scss';`
+  //     }
+  //   }
+  // },
+  configureWebpack: () => ({
+    devtool: 'source-map',
+    resolve: {
+      alias: {
+        '~styles': path.resolve('./src/assets/styles'),
+        // '~images': path.resolve('./src/assets/images')
+      }
+    }
+  }),
   chainWebpack: config => {
     // 这里是对环境的配置，不同环境对应不同的BASE_URL，以便axios的请求地址不同
     config.plugin('define').tap(args => {

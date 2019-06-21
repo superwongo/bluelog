@@ -10,10 +10,12 @@
 
 from flask import Blueprint
 
+from bluelog.extensions import cors
 from .resources import PostResource, PostListResource, CategoryListResource, CategoryResource, CommentListResource, \
     CommentResource
 
 bp = Blueprint('api', __name__)
+cors.init_app(bp, origins='*')
 
 bp.add_url_rule('/posts', endpoint='posts', view_func=PostListResource.as_view('PostListResource'))
 bp.add_url_rule('/post/<int:post_id>', endpoint='post', view_func=PostResource.as_view('PostResource'))

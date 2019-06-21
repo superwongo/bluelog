@@ -18,6 +18,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 from flask_babel import Babel
 from flask_apispec import FlaskApiSpec
+from flask_cors import CORS
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
@@ -29,5 +30,6 @@ csrf = CSRFProtect()
 migrate = Migrate()
 babel = Babel()
 api_doc = FlaskApiSpec()
+cors = CORS()
 
 from bluelog.models import *

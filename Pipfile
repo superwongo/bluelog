@@ -20,6 +20,7 @@ flask-login = "*"
 flask-migrate = "*"
 flask-babel = "*"
 flask-apispec = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.6"
