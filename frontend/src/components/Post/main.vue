@@ -1,13 +1,16 @@
 <template>
   <div class="Post">
-    <router-link tag="p" class="post-title" :to="`/about/${post.id}`">{{ post.title }}</router-link>
-    <p class="post-body">
-      {{ `${post.body.substr(0, 250)}...` }}
-      <small>Read More</small>
+    <router-link class="post-title" :to="`/post/${post.id}`">{{ post.title }}</router-link>
+    <p class="post-body" v-if="post.body">
+      {{ post.body.length > 250 ? `${post.body.substr(0, 250)}...` : post.body }}
+      <small>
+        <router-link :to="`/post/${post.id}`">Read More</router-link>
+      </small>
     </p>
+    <p v-else>空</p>
     <small>
-      Comments: {{ post.comments.length }}&nbsp;&nbsp;
-      Category: {{post.category.name}}
+      Comments: <router-link to="/comment">{{ post.comments.length }}</router-link>&nbsp;&nbsp;
+      Category: <router-link to="/category">{{post.category.name}}</router-link>
       <span class="post-timestamp">{{ post.timestamp }}</span>
     </small>
   </div>
@@ -23,12 +26,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~styles/common.scss";
 .Post {
   text-align: left;
   .post-title {
-    font-size: 24px;
+    @include sc(1.5rem, #2780E3)
     font-weight: lighter;
-    color: #2780E3;
   }
   .post-timestamp {
     float: right;

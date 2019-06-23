@@ -24,6 +24,7 @@ def make_pagination(queryset, endpoint, schema):
         'current_url': current_url,
         'prev_url': prev_url,
         'next_url': next_url,
+        'current_page': page,
         'per_page': per_page,
         'current_count': len(items),
         'total': pagination.total

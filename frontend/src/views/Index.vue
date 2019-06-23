@@ -4,11 +4,9 @@
       <el-header>
         <Header/>
       </el-header>
-      <el-scrollbar>
-        <el-main>
-          <router-view :key="key"/>
-        </el-main>
-      </el-scrollbar>
+      <el-main>
+        <router-view :key="key"/>
+      </el-main>
       <el-footer>
         <Footer/>
       </el-footer>
@@ -39,17 +37,17 @@ export default {
 <style lang="scss" scoped>
 .index{
   .el-container {
-    margin-bottom: 40px;
     .el-header {
       position: fixed;
       width: 100%;
-      left: 0;
-      top: 0;
       z-index: 1500;
     }
     .el-main {
-      margin-top: 40px;
       text-align: center;
+      padding: 4.5rem 10rem;
+    }
+    .el-footer {
+      padding: 0rem 10rem;
     }
   }
 }

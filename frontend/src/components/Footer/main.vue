@@ -29,10 +29,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0px 30px;
-    small > a {
-      text-decoration: none;
-    }
+    margin: 0rem 0.3125rem;
   }
 }
 </style>

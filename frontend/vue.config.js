@@ -3,20 +3,20 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const path = require('path')
 
 module.exports = {
-  // css: {
-  //   loaderOptions: {
-  //     sass: {
-  //       data: `@import '~styles/var.scss';
-  //       @import '~styles/mixin.scss';`
-  //     }
-  //   }
-  // },
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import '~styles/var.scss';
+        @import '~styles/mixin.scss';`
+      }
+    }
+  },
   configureWebpack: () => ({
     devtool: 'source-map',
     resolve: {
       alias: {
         '~styles': path.resolve('./src/assets/styles'),
-        // '~images': path.resolve('./src/assets/images')
+        '~images': path.resolve('./src/assets/images')
       }
     }
   }),

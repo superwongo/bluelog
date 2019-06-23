@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '@/views/Index'
 import Home from '@/views/Home'
 import About from '@/views/About'
+import Post from '@/views/Post'
 
 Vue.use(Router)
 
@@ -18,6 +19,10 @@ const IndexRoute = {
     {
       path: 'about',
       component: About
+    },
+    {
+      path: 'post/:post_id',
+      component: Post
     }
   ]
 }

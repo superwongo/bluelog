@@ -33,7 +33,7 @@ class PostListResource(BaseResource):
     tags = ['posts']
 
     def get(self):
-        queryset = Post.query
+        queryset = Post.query.order_by(Post.timestamp.desc())
         return make_pagination(queryset, 'api.posts', self.schema)
 
     @use_kwargs(Ref('schema'))
