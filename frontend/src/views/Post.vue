@@ -1,12 +1,17 @@
 <template>
   <div class="Post">
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.body }}</p>
+    <h1 class="post-title">{{ post.title }}</h1>
+    <small class="post-subtitle">
+      &nbsp;分类: <router-link to="/category">{{post.category.name}}</router-link><br>
+      &nbsp;日期: {{ post.timestamp }}
+    </small>
+    <markdown-editor v-model="post.body" height="800px" :options="{hideModeSwitch:true,previewStyle:'tab'}" />
   </div>
 </template>
 
 <script>
 import { getPost } from '@/api/post'
+import MarkdownEditor from '@/components/MarkdownEditor'
 
 export default {
   name: 'Post',
@@ -15,6 +20,7 @@ export default {
       post: {}
     }
   },
+  components: { MarkdownEditor },
   created () {
     this.get_post()
   },
@@ -31,6 +37,14 @@ export default {
 
 <style lang="scss" scoped>
 .Post {
-
+  .post-title {
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .post-subtitle {
+    font-weight: 300;
+  }
 }
 </style>

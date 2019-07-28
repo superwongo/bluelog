@@ -13,6 +13,12 @@
   justify-content: center;
   align-items: center;
 }
+// 两边对齐
+@mixin spaceBetween($direction: column) {
+  @include flex($direction);
+  justify-content: space-between;
+  align-items: center;
+}
 //多行超出省略号
 @mixin ell2() {
   word-break: break-all;

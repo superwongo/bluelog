@@ -13,7 +13,8 @@
       :page-sizes="[5, 10, 15, 20]"
       :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
+      :total="total"
+      class="pt3">
     </el-pagination>
   </div>
 </template>
@@ -67,21 +68,15 @@ export default {
     font-size: 4.5rem;
     font-weight: 300;
     line-height: 1.2;
-    text-align: left;
     margin-bottom: 0.5rem;
   }
   .home-subtitle {
-    color: #868e96 !important;
+    color: $grey;
     font-size: 1.4rem;
     font-weight: 300;
     line-height: 1.2;
-    text-align: left;
     margin-left: 0.5rem;
     margin-bottom: 1.5rem;
-  }
-  .el-pagination {
-    padding-top: 3rem;
-    text-align: left;
   }
 }
 </style>

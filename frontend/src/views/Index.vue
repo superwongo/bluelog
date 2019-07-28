@@ -4,7 +4,7 @@
       <el-header>
         <Header/>
       </el-header>
-      <el-main>
+      <el-main class="pt5 pl10 pr10">
         <router-view :key="key"/>
       </el-main>
       <el-footer>
@@ -41,10 +41,6 @@ export default {
       position: fixed;
       width: 100%;
       z-index: 1500;
-    }
-    .el-main {
-      text-align: center;
-      padding: 4.5rem 10rem;
     }
     .el-footer {
       padding: 0rem 10rem;

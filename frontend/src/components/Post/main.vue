@@ -9,9 +9,9 @@
     </p>
     <p v-else>空</p>
     <small>
-      Comments: <router-link to="/comment">{{ post.comments.length }}</router-link>&nbsp;&nbsp;
-      Category: <router-link to="/category">{{post.category.name}}</router-link>
-      <span class="post-timestamp">{{ post.timestamp }}</span>
+      评论: <router-link to="/comment">{{ post.comments.length }}</router-link>&nbsp;&nbsp;
+      分类: <router-link to="/category">{{post.category.name}}</router-link>
+      <span class="fr">{{ post.timestamp }}</span>
     </small>
   </div>
 </template>
@@ -26,15 +26,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/common.scss";
 .Post {
-  text-align: left;
   .post-title {
-    @include sc(1.5rem, #2780E3)
+    @include sc(1.5rem, $light-blue);
     font-weight: lighter;
-  }
-  .post-timestamp {
-    float: right;
   }
 }
 </style>

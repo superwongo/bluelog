@@ -7,7 +7,11 @@ import './components'
 import './registerServiceWorker'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
+import '~styles/element-variables.scss'
+
+import '~styles/index.scss'
+
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

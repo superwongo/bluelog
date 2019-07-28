@@ -1,6 +1,6 @@
 <template>
   <div class="Header">
-    <el-menu :default-active="$route.path" mode="horizontal" :router="true" class="header-menu">
+    <el-menu :default-active="$route.path" mode="horizontal" :router="true" class="header-menu pl10 pr10">
       <el-menu-item>
         <h1 class="header-title-logo"><img alt="Vue logo" src="@/assets/logo.png">&nbsp;部落格</h1>
       </el-menu-item>
@@ -22,12 +22,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/common.scss";
 .Header {
   .header-menu{
-    padding: 0 10rem;
     .header-title-logo {
-      color: rgb(65, 184, 131);
+      color: $green;
       img {
         width: 1.5em;
       }

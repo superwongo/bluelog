@@ -1,47 +1,46 @@
-@import './mixin.scss';
 // 定义常用的类
 @for $i from 1 through 20 {
   // 字体大小 .f8 - f20
   @if ($i >= 8) {
-    .f#{$i} {
-      font-size: ($i * 1px);
+    .fs#{$i} {
+      font-size: ($i * 1rem);
     }
   }
   // 左外边距 .ml1 - .ml20 下同
   .ml#{$i} {
-    margin-left: ($i * 1px);
+    margin-left: ($i * 1rem);
   }
   // 右外边距
   .mr#{$i} {
-    margin-right: ($i * 1px);
+    margin-right: ($i * 1rem);
   }
   // 上外边距
   .mt#{$i} {
-    margin-top: ($i * 1px);
+    margin-top: ($i * 1rem);
   }
   // 下外边距
   .mb#{$i} {
-    margin-bottom: ($i * 1px);
+    margin-bottom: ($i * 1rem);
   }
   // 做内边距
   .pl#{$i} {
-    padding-left: ($i * 1px);
+    padding-left: ($i * 1rem);
   }
   // 右内边距
   .pr#{$i} {
-    padding-right: ($i * 1px);
+    padding-right: ($i * 1rem);
   }
   // 上内边距
   .pt#{$i} {
-    padding-top: ($i * 1px);
+    padding-top: ($i * 1rem);
   }
   // 下内边距
   .pb#{$i} {
-    padding-bottom: ($i * 1px);
+    padding-bottom: ($i * 1rem);
   }
 }
 // 行内元素水平居中
-.text-c {
+.text-center {
   text-align: center;
 }
 // 行内块元素

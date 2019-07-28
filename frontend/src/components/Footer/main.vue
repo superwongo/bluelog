@@ -1,6 +1,6 @@
 <template>
   <div class="Footer">
-    <hr>
+    <el-divider/>
     <div class="footer">
       <small> &copy; 2019 &nbsp; &nbsp;
         <a href="https://github.com/superwongo" title="Written by Super Wong">Super Wong</a> -
@@ -22,14 +22,9 @@ export default {
 
 <style lang="scss" scoped>
 .Footer {
-  hr {
-    color: #eeeeee;
-  }
   .footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0rem 0.3125rem;
+    @include spaceBetween(row);
+    margin: 1rem 0;
   }
 }
 </style>
