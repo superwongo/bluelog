@@ -38,11 +38,11 @@ export default {
     get_post () {
       const postID = this.$route.params.post_id
       getPost(postID).then(response => {
-         this.post = Object.assign({}, response.data)
-         this.markdownValue = Object.assign({}, {
-           markdown: response.data.body,
-           html: ''
-         })
+        this.post = Object.assign({}, response.data)
+        this.markdownValue = Object.assign({}, {
+          markdown: response.data.body,
+          html: ''
+        })
       })
     }
   }
