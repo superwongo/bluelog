@@ -5,22 +5,32 @@
       &nbsp;分类: <router-link to="/category">{{post.category.name}}</router-link><br>
       &nbsp;日期: {{ post.timestamp }}
     </small>
-    <markdown-editor v-model="post.body" height="800px" :options="{hideModeSwitch:true,previewStyle:'tab'}" />
+    <Markdown style="max-height: 600px;" v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
   </div>
 </template>
 
 <script>
 import { getPost } from '@/api/post'
-import MarkdownEditor from '@/components/MarkdownEditor'
+import Markdown from '@/components/Markdown'
 
 export default {
   name: 'Post',
+  components: {
+    Markdown
+  },
   data () {
     return {
-      post: {}
+      post: {
+        category: {},
+        body: '',
+        timestamp: ''
+      },
+      markdownValue: {
+        markdown: '',
+        html: ''
+      }
     }
   },
-  components: { MarkdownEditor },
   created () {
     this.get_post()
   },
@@ -28,7 +38,11 @@ export default {
     get_post () {
       const postID = this.$route.params.post_id
       getPost(postID).then(response => {
-        this.post = Object.assign({}, response.data)
+         this.post = Object.assign({}, response.data)
+         this.markdownValue = Object.assign({}, {
+           markdown: response.data.body,
+           html: ''
+         })
       })
     }
   }
@@ -45,6 +59,9 @@ export default {
   }
   .post-subtitle {
     font-weight: 300;
+  }
+  .post-content {
+    padding-top: 1rem;
   }
 }
 </style>
