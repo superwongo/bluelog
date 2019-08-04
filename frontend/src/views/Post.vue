@@ -5,7 +5,7 @@
       &nbsp;分类: <router-link to="/category">{{post.category.name}}</router-link><br>
       &nbsp;日期: {{ post.timestamp }}
     </small>
-    <Markdown style="max-height: 600px;" v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
+    <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
   </div>
 </template>
 

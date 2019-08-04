@@ -1,7 +1,7 @@
 <template>
   <div class="Home">
-    <h1 class="home-title">Blueblog</h1>
-    <h4 class="home-subtitle">No, I'm the real thing.</h4>
+    <h1 class="home-title">SuperBlog</h1>
+    <h4 class="home-subtitle">这就是真实的我</h4>
     <div v-for="(item, index) in posts" :key="item.id">
       <Post :post="item"/>
       <el-divider v-if="index !== posts.length-1"/>

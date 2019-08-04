@@ -1,8 +1,8 @@
 <template>
   <div class="Header">
-    <el-menu :default-active="activeIndex" mode="horizontal" class="header-menu pl10 pr10">
+    <el-menu :default-active="activeIndex" mode="horizontal" class="header-menu pl7 pr7">
       <el-menu-item>
-        <h1 class="header-title-logo"><img alt="Vue logo" src="@/assets/logo.png">&nbsp;部落格</h1>
+        <h1 class="header-title-logo"><img alt="Vue logo" src="@/assets/logo.png">&nbsp;SuperBlog</h1>
       </el-menu-item>
       <el-menu-item index="home"><router-link to="/home">首页</router-link></el-menu-item>
       <el-menu-item index="about"><router-link to="/about">关于</router-link></el-menu-item>
