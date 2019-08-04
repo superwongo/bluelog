@@ -6,17 +6,21 @@
       &nbsp;日期: {{ post.timestamp }}
     </small>
     <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
+    <el-button type="primary" icon="el-icon-share" class="post-share">分享</el-button>
+    <Comment/>
   </div>
 </template>
 
 <script>
 import { getPost } from '@/api/post'
 import Markdown from '@/components/Markdown'
+import Comment from '@/components/Comment'
 
 export default {
   name: 'Post',
   components: {
-    Markdown
+    Markdown,
+    Comment
   },
   data () {
     return {
@@ -62,6 +66,9 @@ export default {
   }
   .post-content {
     padding-top: 1rem;
+  }
+  .post-share {
+    margin: 1.25rem 0;
   }
 }
 </style>
