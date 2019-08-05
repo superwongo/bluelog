@@ -40,7 +40,7 @@ export default {
     .el-header {
       position: fixed;
       width: 100%;
-      z-index: 1500;
+      z-index: 2000;
     }
     .el-footer {
       padding: 0rem 10rem;
