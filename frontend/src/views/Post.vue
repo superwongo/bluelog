@@ -72,18 +72,18 @@ export default {
           { required: true, message: '请输入评论内容', trigger: 'blur' }
         ]
       },
-      submitForm(formName) {
+      submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            alert('submit!')
           } else {
-            console.log('error submit!!');
-            return false;
+            console.log('error submit!!')
+            return false
           }
-        });
+        })
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
       }
     }
   },
