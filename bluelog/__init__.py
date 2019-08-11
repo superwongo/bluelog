@@ -18,7 +18,7 @@ from flask_login import current_user
 from flask_sqlalchemy import get_debug_queries
 from flask_babel import lazy_gettext as _l
 
-from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel, api_doc
+from bluelog.extensions import bootstrap, db, moment, ckeditor, mail, login_manager, csrf, migrate, babel, api_doc, cors
 from bluelog.settings import config
 from bluelog.blueprints import auth, admin, blog
 from bluelog.commands import register_commands
@@ -74,6 +74,7 @@ def register_extensions(app):
     babel.init_app(app)
     # 取消api蓝本的csrf验证
     csrf.exempt(apis.bp)
+    cors.init_app(app, supports_credentials=True)
 
     @login_manager.user_loader
     def load_user(user_id):

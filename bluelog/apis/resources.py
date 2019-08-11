@@ -8,7 +8,7 @@
 @detail: 资源
 """
 
-from flask import jsonify
+from flask import jsonify, request
 from flask_apispec.views import MethodResource
 from flask_apispec import marshal_with, Ref, use_kwargs, doc
 
@@ -123,7 +123,8 @@ class CommentListResource(BaseResource):
     tags = ['comments']
 
     def get(self):
-        queryset = Comment.query
+        post_id = request.args.get('post_id')
+        queryset = Comment.query.filter_by(post_id=post_id)
         return make_pagination(queryset, 'api.comments', self.schema)
 
     @use_kwargs(Ref('schema'))

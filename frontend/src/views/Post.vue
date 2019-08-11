@@ -7,7 +7,7 @@
     </small>
     <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
     <el-button type="primary" icon="el-icon-share" class="post-share">分享</el-button>
-    <Comment/>
+    <Comment :post_id="$route.params.post_id"/>
   </div>
 </template>
 

@@ -8,9 +8,10 @@ const service = axios.create({
   baseURL: process.env.BASE_URL
 })
 
-// post请求的时候，我们需要加上一个请求头，所以可以在这里进行一个默认的设置
-// 即设置post的请求头为application/x-www-form-urlencoded;charset=UTF-8
-service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+// 请求头默认设置为application/json;charset=UTF-8
+service.defaults.headers['Access-Control-Allow-Origin'] = '*'
+service.defaults.headers['Access-Control-Allow-Methods'] = 'PUT,POST,GET,DELETE,OPTIONS'
+service.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 
 /**
  * 请求前拦截
