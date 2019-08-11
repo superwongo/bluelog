@@ -3,7 +3,7 @@
     <h1 class="post-title">{{ post.title }}</h1>
     <small class="post-subtitle">
       &nbsp;分类: <router-link to="/category">{{post.category.name}}</router-link><br>
-      &nbsp;日期: {{ post.timestamp }}
+      &nbsp;日期: {{ post.timestamp | formatDate }}
     </small>
     <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
     <el-button type="primary" icon="el-icon-share" class="post-share">分享</el-button>
@@ -15,6 +15,7 @@
 import { getPost } from '@/api/post'
 import Markdown from '@/components/Markdown'
 import Comment from '@/components/Comment'
+import { formatDate } from '@/filter'
 
 export default {
   name: 'Post',
@@ -49,6 +50,9 @@ export default {
         })
       })
     }
+  },
+  filters: {
+    formatDate
   }
 }
 </script>

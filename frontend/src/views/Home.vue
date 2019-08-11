@@ -76,7 +76,7 @@ export default {
     font-weight: 300;
     line-height: 1.2;
     margin-left: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="index">
-    <el-container>
+    <el-container class="pl8 pr8">
       <el-header>
         <Header/>
       </el-header>
-      <el-main class="pt5 pl10 pr10">
+      <el-main class="pt6">
         <router-view :key="key"/>
       </el-main>
       <el-footer>
@@ -39,11 +39,10 @@ export default {
   .el-container {
     .el-header {
       position: fixed;
-      width: 100%;
+      top: 0;
+      left: 7rem;
+      right: 8rem;
       z-index: 2000;
-    }
-    .el-footer {
-      padding: 0rem 10rem;
     }
   }
 }

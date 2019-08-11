@@ -11,16 +11,21 @@
     <small>
       评论: <router-link to="/comment">{{ post.comments.length }}</router-link>&nbsp;&nbsp;
       分类: <router-link to="/category">{{post.category.name}}</router-link>
-      <span class="fr">{{ post.timestamp }}</span>
+      <span class="fr">{{ post.timestamp | formatDate }}</span>
     </small>
   </div>
 </template>
 
 <script>
+import { formatDate } from "@/filter"
+
 export default {
   name: 'Post',
   props: {
     post: Object
+  },
+  filters: {
+    formatDate
   }
 }
 </script>

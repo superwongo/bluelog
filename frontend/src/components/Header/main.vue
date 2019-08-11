@@ -1,6 +1,6 @@
 <template>
   <div class="Header">
-    <el-menu :default-active="activeIndex" mode="horizontal" class="header-menu pl7 pr7">
+    <el-menu :default-active="activeIndex" mode="horizontal" class="header-menu">
       <el-menu-item>
         <h1 class="header-title-logo"><img alt="Vue logo" src="@/assets/logo.png">&nbsp;SuperBlog</h1>
       </el-menu-item>

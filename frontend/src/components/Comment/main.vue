@@ -9,11 +9,11 @@
               {{ item.author }}
             </a>
             <span class="badge-primary" v-if="item.from_admin">作者</span>
-            &nbsp;&nbsp;回复
+            <div v-if="item.replied">&nbsp;&nbsp;回复</div>
           </div>
-          <div class="comment-card-time">5天前</div>
+          <div class="comment-card-time">{{ item.timestamp | formatTimeFromNow }}</div>
         </div>
-        <p class="comment-card-line comment-replay-content">陈芳:<br/>准备那些如此投资.</p>
+        <p class="comment-card-line comment-replay-content" v-if="item.replied">{{ item.replied.author }}:<br/>{{ item.replied.body }}</p>
         <div class="comment-card-line">{{ item.body }}</div>
         <div class="comment-card-line"><el-button size="medium" class="comment-card-replay">回复</el-button></div>
       </el-card>
@@ -35,6 +35,7 @@
 
 <script>
 import { getComments } from '@/api/comment'
+import { formatTimeFromNow } from '@/filter'
 
 export default {
   name: 'Comment',
@@ -58,7 +59,6 @@ export default {
     get_comments () {
       getComments(this.post_id, this.currentPage, this.pageSize).then(response => {
         let result = response.data
-        console.log(result)
         this.comments = Object.assign([], result.items)
         this.currentPage = result.current_page
         this.pageSize = result.per_page
@@ -73,6 +73,9 @@ export default {
       this.currentPage = val
       this.get_comments()
     }
+  },
+  filters: {
+    formatTimeFromNow
   }
 }
 </script>
@@ -92,6 +95,7 @@ export default {
     .comment-card-line:first-child {
       @include spaceBetween(row);
       .comment-card-tag {
+        @include flex(row);
         font-size: 0.8rem;
         font-weight: 600;
         .comment-card-author {

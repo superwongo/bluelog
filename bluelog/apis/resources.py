@@ -124,7 +124,10 @@ class CommentListResource(BaseResource):
 
     def get(self):
         post_id = request.args.get('post_id')
-        queryset = Comment.query.filter_by(post_id=post_id)
+        queryset = Comment.query.filter_by(reviewed=True)
+        if post_id:
+            queryset = queryset.filter_by(post_id=post_id)
+        queryset = queryset.order_by(Comment.timestamp.desc())
         return make_pagination(queryset, 'api.comments', self.schema)
 
     @use_kwargs(Ref('schema'))
