@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-06-04 10:54+0800\n"
+"POT-Creation-Date: 2019-08-11 17:27+0800\n"
 "PO-Revision-Date: 2019-06-03 16:26+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans_CN\n"
@@ -18,101 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: bluelog/__init__.py:118
+#: bluelog/__init__.py:124
 msgid "Bluelog Application Error"
 msgstr "部落格应用程序错误"
-
-#: bluelog/commands.py:23
-msgid "Create after drop."
-msgstr "删除后重建数据库"
-
-#: bluelog/commands.py:27
-msgid "This operation will delete the database, do you want to continue?"
-msgstr "此操作将删除数据库，您确认继续吗？"
-
-#: bluelog/commands.py:29
-msgid "Drop tables."
-msgstr "删除表"
-
-#: bluelog/commands.py:31
-msgid "Initialized database."
-msgstr "初始化数据库"
-
-#: bluelog/commands.py:34
-msgid "Quantity of categories, default is 10"
-msgstr "分类数量，默认10条"
-
-#: bluelog/commands.py:35
-msgid "Quantity of posts, default is 50"
-msgstr "文章数量，默认50条"
-
-#: bluelog/commands.py:36
-msgid "Quantity of comments, default is 500"
-msgstr "评论数量，默认500条"
-
-#: bluelog/commands.py:43
-msgid "Generating the administrator..."
-msgstr "正在生成管理员信息......"
-
-#: bluelog/commands.py:46
-#, python-format
-msgid "Generating %(category)s categories..."
-msgstr "正在生成%(category)s条分类信息......"
-
-#: bluelog/commands.py:49
-#, python-format
-msgid "Generating %(post)s posts..."
-msgstr "正在生成%(post)s条文章信息......"
-
-#: bluelog/commands.py:52
-#, python-format
-msgid "Generating %(comment)s comments..."
-msgstr "正在生成%(comment)s条评论信息......"
-
-#: bluelog/commands.py:55 bluelog/commands.py:89
-msgid "Done."
-msgstr "已完成。"
-
-#: bluelog/commands.py:58
-msgid "The username used to login."
-msgstr "用于登录的用户名"
-
-#: bluelog/commands.py:61
-msgid "The password used to login."
-msgstr "用于登录的密码"
-
-#: bluelog/commands.py:64
-msgid "Initializing the database..."
-msgstr "正在初始化数据库......"
-
-#: bluelog/commands.py:69
-msgid "The administrator already exists. updating..."
-msgstr "管理员已存在，正在更新......"
-
-#: bluelog/commands.py:73
-msgid "Creating the temporary administrator account..."
-msgstr "正在创建临时管理员账户信息......"
-
-#: bluelog/commands.py:75 bluelog/templates/base.html:9
-#: bluelog/templates/base.html:19
-msgid "Bluelog"
-msgstr "部落格"
-
-#: bluelog/commands.py:76 bluelog/fakes.py:27
-msgid "No, I'm the real thing."
-msgstr "不，我是真的。"
-
-#: bluelog/commands.py:78
-msgid "Anything about you."
-msgstr "关于你"
-
-#: bluelog/commands.py:84
-msgid "Creating the default category..."
-msgstr "正在创建默认分类......"
-
-#: bluelog/commands.py:85 bluelog/fakes.py:38
-msgid "Default"
-msgstr "默认"
 
 #: bluelog/emails.py:37
 msgid "New comment"
@@ -163,14 +71,6 @@ msgstr ""
 "                              <p><small style=\"color: "
 "#868e96\">此邮件无需回复</small></p>\n"
 "                          "
-
-#: bluelog/fakes.py:26
-msgid "Blueblog"
-msgstr "部落格"
-
-#: bluelog/fakes.py:29
-msgid "Um, I, Super Wong, had a fun time as member of CHAM..."
-msgstr "额嗯，我，Super Wong，很高兴成为管理员"
 
 #: bluelog/forms.py:22 bluelog/forms.py:68
 msgid "Username"
@@ -241,11 +141,11 @@ msgstr "博客子标题"
 msgid "About Page"
 msgstr "关于页"
 
-#: bluelog/settings.py:58
+#: bluelog/settings.py:62
 msgid "Perfect Blue"
 msgstr "日间模式"
 
-#: bluelog/settings.py:58
+#: bluelog/settings.py:62
 msgid "Black Swan"
 msgstr "夜间模式"
 
@@ -324,6 +224,10 @@ msgstr "退出登录成功。"
 #: bluelog/blueprints/blog.py:100
 msgid "Thanks, your comment will be published after reviewed."
 msgstr "谢谢，您的评论将在审核后发布。"
+
+#: bluelog/templates/base.html:9 bluelog/templates/base.html:19
+msgid "Bluelog"
+msgstr "部落格"
 
 #: bluelog/templates/base.html:27 bluelog/templates/blog/index.html:4
 msgid "Home"
@@ -570,4 +474,73 @@ msgstr "500错误"
 #: bluelog/templates/errors/500.html:11
 msgid "Internal Server Error"
 msgstr "内部服务器错误"
+
+#~ msgid "Create after drop."
+#~ msgstr "删除后重建数据库"
+
+#~ msgid "This operation will delete the database, do you want to continue?"
+#~ msgstr "此操作将删除数据库，您确认继续吗？"
+
+#~ msgid "Drop tables."
+#~ msgstr "删除表"
+
+#~ msgid "Initialized database."
+#~ msgstr "初始化数据库"
+
+#~ msgid "Quantity of categories, default is 10"
+#~ msgstr "分类数量，默认10条"
+
+#~ msgid "Quantity of posts, default is 50"
+#~ msgstr "文章数量，默认50条"
+
+#~ msgid "Quantity of comments, default is 500"
+#~ msgstr "评论数量，默认500条"
+
+#~ msgid "Generating the administrator..."
+#~ msgstr "正在生成管理员信息......"
+
+#~ msgid "Generating %(category)s categories..."
+#~ msgstr "正在生成%(category)s条分类信息......"
+
+#~ msgid "Generating %(post)s posts..."
+#~ msgstr "正在生成%(post)s条文章信息......"
+
+#~ msgid "Generating %(comment)s comments..."
+#~ msgstr "正在生成%(comment)s条评论信息......"
+
+#~ msgid "Done."
+#~ msgstr "已完成。"
+
+#~ msgid "The username used to login."
+#~ msgstr "用于登录的用户名"
+
+#~ msgid "The password used to login."
+#~ msgstr "用于登录的密码"
+
+#~ msgid "Initializing the database..."
+#~ msgstr "正在初始化数据库......"
+
+#~ msgid "The administrator already exists. updating..."
+#~ msgstr "管理员已存在，正在更新......"
+
+#~ msgid "Creating the temporary administrator account..."
+#~ msgstr "正在创建临时管理员账户信息......"
+
+#~ msgid "No, I'm the real thing."
+#~ msgstr "不，我是真的。"
+
+#~ msgid "Anything about you."
+#~ msgstr "关于你"
+
+#~ msgid "Creating the default category..."
+#~ msgstr "正在创建默认分类......"
+
+#~ msgid "Default"
+#~ msgstr "默认"
+
+#~ msgid "Blueblog"
+#~ msgstr "部落格"
+
+#~ msgid "Um, I, Super Wong, had a fun time as member of CHAM..."
+#~ msgstr "额嗯，我，Super Wong，很高兴成为管理员"
 

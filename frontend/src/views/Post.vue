@@ -6,8 +6,26 @@
       &nbsp;日期: {{ post.timestamp | formatDate }}
     </small>
     <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
-    <el-button type="primary" icon="el-icon-share" class="post-share">分享</el-button>
+    <el-button type="primary" size="small" icon="el-icon-share" class="post-share">分享</el-button>
     <Comment :post_id="$route.params.post_id"/>
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="comment-submit mt1">
+      <el-form-item label="姓名" prop="author">
+        <el-input v-model="ruleForm.author"></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input v-model="ruleForm.email"></el-input>
+      </el-form-item>
+      <el-form-item label="网址" prop="site">
+        <el-input v-model="ruleForm.site"></el-input>
+      </el-form-item>
+      <el-form-item label="评论" prop="body">
+        <el-input type="textarea" v-model="ruleForm.body"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" size="small" @click="submitForm('ruleForm')">提交</el-button>
+        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -33,6 +51,39 @@ export default {
       markdownValue: {
         markdown: '',
         html: ''
+      },
+      ruleForm: {
+        author: '',
+        email: '',
+        site: '',
+        body: ''
+      },
+      rules: {
+        author: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        email: [
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ],
+        site: [
+          { type: 'url', message: '请输入正确的网址', trigger: ['blur', 'change'] }
+        ],
+        body: [
+          { required: true, message: '请输入评论内容', trigger: 'blur' }
+        ]
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
       }
     }
   },
