@@ -2,7 +2,7 @@
   <div class="Comment">
     <h3 class="comment-title">{{ total }} 评论 latest</h3>
     <div class="comment-content">
-      <el-card shadow="hover" class="comment-card" v-for="item in comments" :key="item.id">
+      <el-card shadow="hover" class="comment-card" v-for="item in data" :key="item.id">
         <div class="comment-card-line">
           <div class="comment-card-tag">
             <a href="" class="comment-card-author">
@@ -34,44 +34,36 @@
 </template>
 
 <script>
-import { getComments } from '@/api/comment'
 import { formatTimeFromNow } from '@/filter'
 
 export default {
   name: 'Comment',
   props: {
-    post_id: {
-      type: String
+    data: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    currentPage: {
+      type: Number,
+      default: 1
+    },
+    pageSize: {
+      type: Number,
+      default: 10
+    },
+    total: {
+      type: Number,
+      default: 0
     }
-  },
-  data () {
-    return {
-      comments: [],
-      currentPage: 1,
-      pageSize: 10,
-      total: 0
-    }
-  },
-  created () {
-    this.get_comments()
   },
   methods: {
-    get_comments () {
-      getComments(this.post_id, this.currentPage, this.pageSize).then(response => {
-        let result = response.data
-        this.comments = Object.assign([], result.items)
-        this.currentPage = result.current_page
-        this.pageSize = result.per_page
-        this.total = result.total
-      })
-    },
     handleSizeChange (val) {
-      this.pageSize = val
-      this.get_comments()
+      this.$emit('size-change', val)
     },
     handleCurrentChange (val) {
-      this.currentPage = val
-      this.get_comments()
+      this.$emit('current-change', val)
     }
   },
   filters: {

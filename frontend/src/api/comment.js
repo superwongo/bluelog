@@ -13,3 +13,17 @@ export function getComment (commentID) {
     method: 'get'
   })
 }
+
+export function submitComment (postID, commentInfo) {
+  return request({
+    url: '/comments',
+    method: 'post',
+    data: {
+      post_id: postID,
+      author: commentInfo.author,
+      email: commentInfo.email,
+      site: commentInfo.site,
+      body: commentInfo.body
+    }
+  })
+}

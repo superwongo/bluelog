@@ -20,9 +20,11 @@ service.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 let loading = null
 service.interceptors.request.use(config => {
   // 在请求先展示加载框
-  loading = Loading.service({
-    text: '正在加载中......'
-  })
+  // if (config.method === 'get') {
+  //   loading = Loading.service({
+  //     text: '正在加载中......'
+  //   })
+  // }
   const token = localStorage.getItem('token')
   if (token) {
     config.headers['Authorization'] = token
@@ -44,7 +46,7 @@ service.interceptors.response.use(response => {
   const responseCode = response.status
   // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
   // 否则的话抛出错误
-  if (responseCode === 200) {
+  if (responseCode === 200 || responseCode === 201) {
     return Promise.resolve(response)
   } else {
     return Promise.reject(response)
@@ -102,6 +104,12 @@ service.interceptors.response.use(response => {
       Message({
         type: 'error',
         message: '网络请求不存在'
+      })
+      break
+    case 422:
+      Message({
+        type: 'error',
+        message: error.response.data.join(';')
       })
       break
     // 其他错误，直接抛出错误提示

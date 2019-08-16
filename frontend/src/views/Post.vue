@@ -7,7 +7,14 @@
     </small>
     <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
     <el-button type="primary" size="small" icon="el-icon-share" class="post-share">分享</el-button>
-    <Comment :post_id="$route.params.post_id"/>
+    <Comment
+      :data="comments"
+      :currentPage="currentPage"
+      :pageSize="pageSize"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      class="post-comments"/>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="comment-submit mt1">
       <el-form-item label="姓名" prop="author">
         <el-input v-model="ruleForm.author"></el-input>
@@ -34,6 +41,7 @@ import { getPost } from '@/api/post'
 import Markdown from '@/components/Markdown'
 import Comment from '@/components/Comment'
 import { formatDate } from '@/filter'
+import { getComments, submitComment } from '@/api/comment'
 
 export default {
   name: 'Post',
@@ -43,11 +51,16 @@ export default {
   },
   data () {
     return {
+      post_id: this.$route.params.post_id,
       post: {
         category: {},
         body: '',
         timestamp: ''
       },
+      comments: [],
+      currentPage: 1,
+      pageSize: 10,
+      total: 0,
       markdownValue: {
         markdown: '',
         html: ''
@@ -75,9 +88,16 @@ export default {
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!')
+            submitComment(this.post_id, this.ruleForm).then(response => {
+              if (response.data.code === 200 || response.data.code === 201) {
+                this.get_comments()
+                this.$message({
+                  type: 'success',
+                  message: '评论提交成功'
+                })
+              }
+            })
           } else {
-            console.log('error submit!!')
             return false
           }
         })
@@ -89,17 +109,36 @@ export default {
   },
   created () {
     this.get_post()
+    this.get_comments()
   },
   methods: {
     get_post () {
-      const postID = this.$route.params.post_id
-      getPost(postID).then(response => {
+      getPost(this.post_id).then(response => {
         this.post = Object.assign({}, response.data)
         this.markdownValue = Object.assign({}, {
           markdown: response.data.body,
           html: ''
         })
       })
+    },
+    get_comments () {
+      getComments(this.post_id, this.currentPage, this.pageSize).then(response => {
+        let result = response.data
+        this.comments = Object.assign([], result.items)
+        this.currentPage = result.current_page
+        this.pageSize = result.per_page
+        this.total = result.total
+      })
+    },
+    handleSizeChange (val) {
+      this.pageSize = val
+      this.get_comments()
+    },
+    handleCurrentChange (val) {
+      this.currentPage = val
+      this.get_comments()
+      const anchor = this.$el.querySelector('.post-comments')
+      document.documentElement.scrollTop = anchor.offsetTop
     }
   },
   filters: {
