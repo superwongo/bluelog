@@ -14,16 +14,20 @@ export function getComment (commentID) {
   })
 }
 
-export function submitComment (postID, commentInfo) {
+export function submitComment (postID, commentInfo, repliedCommentID) {
+  const data = {
+    post_id: postID,
+    author: commentInfo.author,
+    email: commentInfo.email,
+    site: commentInfo.site,
+    body: commentInfo.body
+  }
+  if (repliedCommentID) {
+    data.replied_id = repliedCommentID
+  }
   return request({
     url: '/comments',
     method: 'post',
-    data: {
-      post_id: postID,
-      author: commentInfo.author,
-      email: commentInfo.email,
-      site: commentInfo.site,
-      body: commentInfo.body
-    }
+    data: data
   })
 }

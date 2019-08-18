@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { formatDate } from '@/filter'
+import { formatDate } from '@/utils/filters'
 
 export default {
   name: 'Post',

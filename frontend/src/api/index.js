@@ -1,6 +1,7 @@
 import axios from 'axios'
-import router from '../router'
-import { Message } from 'element-ui'
+import router from '@/router'
+import { Message, Loading } from 'element-ui'
+import { ResponseErrorHandle } from '@/utils'
 
 const service = axios.create({
   // 设置超时时间
@@ -8,10 +9,10 @@ const service = axios.create({
   baseURL: process.env.BASE_URL
 })
 
-// 请求头默认设置为application/json;charset=UTF-8
-service.defaults.headers['Access-Control-Allow-Origin'] = '*'
-service.defaults.headers['Access-Control-Allow-Methods'] = 'PUT,POST,GET,DELETE,OPTIONS'
-service.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
+// // 请求头默认设置为application/json;charset=UTF-8
+// service.defaults.headers['Access-Control-Allow-Origin'] = '*'
+// service.defaults.headers['Access-Control-Allow-Methods'] = 'PUT,POST,GET,DELETE,OPTIONS'
+// service.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 
 /**
  * 请求前拦截
@@ -20,11 +21,11 @@ service.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 let loading = null
 service.interceptors.request.use(config => {
   // 在请求先展示加载框
-  // if (config.method === 'get') {
-  //   loading = Loading.service({
-  //     text: '正在加载中......'
-  //   })
-  // }
+  if (config.method === 'get') {
+    loading = Loading.service({
+      text: '正在加载中......'
+    })
+  }
   const token = localStorage.getItem('token')
   if (token) {
     config.headers['Authorization'] = token
@@ -106,17 +107,11 @@ service.interceptors.response.use(response => {
         message: '网络请求不存在'
       })
       break
-    case 422:
-      Message({
-        type: 'error',
-        message: error.response.data.join(';')
-      })
-      break
     // 其他错误，直接抛出错误提示
     default:
       Message({
         type: 'error',
-        message: error.response.data.message
+        message: ResponseErrorHandle(error.response)
       })
   }
   return Promise.reject(error)
