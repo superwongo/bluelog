@@ -87,8 +87,7 @@ export default {
     border: 1px solid rgba(0,0,0,0.125);
     border-bottom: none;
     line-height: 1.75rem;
-    .comment-card-line:first-child {
-      @include spaceBetween(row);
+    .comment-card-line {
       .comment-card-tag {
         @include flex(row);
         font-size: 0.8rem;
@@ -110,13 +109,16 @@ export default {
         font-size: 0.8rem;
         font-weight: 300;
       }
-    }
-    .comment-card-line:last-child {
-      text-align: right;
       .comment-card-replay {
         border: none;
         padding: 0.5rem;
       }
+    }
+    .comment-card-line:first-child {
+      @include spaceBetween(row);
+    }
+    .comment-card-line:last-child {
+      text-align: right;
     }
     .comment-replay-content {
       margin: 0.25rem;
