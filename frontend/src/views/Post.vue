@@ -13,23 +13,25 @@
         :currentPage="currentPage"
         :pageSize="pageSize"
         :total="total"
-        :postID="post_id"
+        :postID="postID"
         @current-change="handleCurrentChange"
         @refresh-comment="refreshCommentsInfo"
         class="post-comments"/>
     </div>
-    <el-card class="post-right fr" shadow :body-style="{backgroundColor: '#fff'}">
-      <div slot="header" class="category-title">
-        <span>分类</span>
-      </div>
-      <div v-for="(item, index) in categories" :key="item.id" class="category-content">
-        <div class="category-content-line">
-          <a>{{ item.name }}</a>
-          <el-tag effect="dark" size="small">{{ item.posts.length }}</el-tag>
+    <Affix :offset-top="50" class="post-right fr">
+      <el-card class="category-card" shadow :body-style="categoryBodyStyle">
+        <div slot="header" class="category-title">
+          <span>分类</span>
         </div>
-        <el-divider class="category-content-divider" v-if="index !== categories.length-1"></el-divider>
-      </div>
-    </el-card>
+        <div v-for="(item, index) in categories" :key="item.id" class="category-content">
+          <div class="category-content-line">
+            <a>{{ item.name }}</a>
+            <el-tag effect="dark" size="small">{{ item.posts.length }}</el-tag>
+          </div>
+          <el-divider v-if="index !== categories.length-1"></el-divider>
+        </div>
+      </el-card>
+    </Affix>
   </div>
 </template>
 
@@ -49,7 +51,7 @@ export default {
   },
   data () {
     return {
-      post_id: this.$route.params.post_id,
+      postID: this.$route.params.post_id,
       post: {
         category: {},
         body: '',
@@ -63,7 +65,11 @@ export default {
         markdown: '',
         html: ''
       },
-      categories: []
+      categories: [],
+      categoryBodyStyle: {
+        backgroundColor: '#fff',
+        padding: '0'
+      }
     }
   },
   created () {
@@ -79,7 +85,7 @@ export default {
       }
     },
     getPost () {
-      getPost(this.post_id).then(response => {
+      getPost(this.postID).then(response => {
         this.post = Object.assign({}, response.data)
         this.markdownValue = Object.assign({}, {
           markdown: response.data.body,
@@ -88,7 +94,7 @@ export default {
       })
     },
     getCommentsInfo () {
-      getComments(this.post_id, this.currentPage, this.pageSize).then(response => {
+      getComments(this.postID, this.currentPage, this.pageSize).then(response => {
         let result = response.data
         this.comments = Object.assign([], result.items)
         this.currentPage = result.current_page
@@ -142,18 +148,29 @@ export default {
     }
   }
   .post-right {
-    width: 25%;
     margin-top: 1rem;
-    background-color: rgba(0,0,0,0.03);
-    .category-content {
-      line-height: 0.5rem;
-      .category-content-line {
-        @include spaceBetween(row);
+    width: 25%;
+    .category-card {
+      background-color: rgba(0,0,0,0.03);
+      .category-title {
+        padding: 0 1rem;
       }
-      .category-content-divider {
+      .category-content {
+        .category-content-line {
+          @include spaceBetween(row);
+          padding: 0 2rem;
+        }
+        .el-divider {
+          margin: 1rem 0;
+        }
+      }
+      .category-content:first-child {
+        padding-top: 0.5rem;
+      }
+      .category-content:last-child {
+        padding-bottom: 0.5rem;
       }
     }
   }
-
 }
 </style>
