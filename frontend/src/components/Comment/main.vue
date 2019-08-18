@@ -102,7 +102,8 @@ export default {
           color: #ffffff;
           background-color: #2780E3;
           line-height: 1rem;
-          padding: 0.2rem;
+          padding: 0.25rem;
+          margin: 0 0.25rem;
         }
       }
       .comment-card-time {
