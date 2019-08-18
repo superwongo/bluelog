@@ -104,7 +104,7 @@ export default {
       this.currentPage = val
       this.refreshCommentsInfo()
     },
-    getCategoriesInfo() {
+    getCategoriesInfo () {
       getCategories().then(response => {
         this.categories = Object.assign([], response.data)
       })
