@@ -2,21 +2,34 @@
   <div class="Post">
     <h1 class="post-title">{{ post.title }}</h1>
     <small class="post-subtitle">
-      &nbsp;分类: <router-link to="/category">{{post.category.name}}</router-link><br>
-      &nbsp;日期: {{ post.timestamp | formatDate }}
+      <p>分类: <router-link to="/category">{{post.category.name}}</router-link></p>
+      <p>日期: {{ post.timestamp | formatDate }}</p>
     </small>
-    <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
-    <el-button type="primary" size="small" icon="el-icon-share" class="post-share">分享</el-button>
-    <Comment
-      :data="comments"
-      :currentPage="currentPage"
-      :pageSize="pageSize"
-      :total="total"
-      :postID="post_id"
-      @current-change="handleCurrentChange"
-      @refresh-comment="refreshCommentsInfo"
-      class="post-comments"/>
-
+    <div class="post-left fl">
+      <Markdown v-model="markdownValue" class="post-content" :editable="false" :subfield="false"/>
+      <el-button type="primary" size="small" icon="el-icon-share" class="post-share">分享</el-button>
+      <Comment
+        :data="comments"
+        :currentPage="currentPage"
+        :pageSize="pageSize"
+        :total="total"
+        :postID="post_id"
+        @current-change="handleCurrentChange"
+        @refresh-comment="refreshCommentsInfo"
+        class="post-comments"/>
+    </div>
+    <el-card class="post-right fr" shadow :body-style="{backgroundColor: '#fff'}">
+      <div slot="header" class="category-title">
+        <span>分类</span>
+      </div>
+      <div v-for="(item, index) in categories" :key="item.id" class="category-content">
+        <div class="category-content-line">
+          <a>{{ item.name }}</a>
+          <el-tag effect="dark" size="small">{{ item.posts.length }}</el-tag>
+        </div>
+        <el-divider class="category-content-divider" v-if="index !== categories.length-1"></el-divider>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -26,6 +39,7 @@ import Markdown from '@/components/Markdown'
 import Comment from '@/components/Comment'
 import { formatDate } from '@/utils/filters'
 import { getComments } from '@/api/comment'
+import { getCategories } from '@/api/category'
 
 export default {
   name: 'Post',
@@ -48,12 +62,14 @@ export default {
       markdownValue: {
         markdown: '',
         html: ''
-      }
+      },
+      categories: []
     }
   },
   created () {
     this.getPost()
     this.getCommentsInfo()
+    this.getCategoriesInfo()
   },
   methods: {
     anchorOffsetTop (selector) {
@@ -80,13 +96,18 @@ export default {
         this.total = result.total
       })
     },
-    refreshCommentsInfo() {
+    refreshCommentsInfo () {
       this.getCommentsInfo()
       this.anchorOffsetTop('.post-share')
     },
     handleCurrentChange (val) {
       this.currentPage = val
       this.refreshCommentsInfo()
+    },
+    getCategoriesInfo() {
+      getCategories().then(response => {
+        this.categories = Object.assign([], response.data)
+      })
     }
   },
   filters: {
@@ -104,13 +125,35 @@ export default {
     margin-bottom: 0.5rem;
   }
   .post-subtitle {
-    font-weight: 300;
+    margin-bottom: 0.5rem;
+    p {
+      margin: 0;
+      padding: 0;
+      font-weight: 300;
+    }
   }
-  .post-content {
-    padding-top: 1rem;
+  .post-left {
+    width: 70%;
+    .post-content {
+      padding-top: 1rem;
+    }
+    .post-share {
+      margin: 1.25rem 0;
+    }
   }
-  .post-share {
-    margin: 1.25rem 0;
+  .post-right {
+    width: 25%;
+    margin-top: 1rem;
+    background-color: rgba(0,0,0,0.03);
+    .category-content {
+      line-height: 0.5rem;
+      .category-content-line {
+        @include spaceBetween(row);
+      }
+      .category-content-divider {
+      }
+    }
   }
+
 }
 </style>

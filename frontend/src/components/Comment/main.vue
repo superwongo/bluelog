@@ -8,7 +8,7 @@
             <a href="" class="comment-card-author">
               {{ item.author }}
             </a>
-            <span class="badge-primary" v-if="item.from_admin">作者</span>
+            <el-tag class="badge-primary" v-if="item.from_admin" effect="dark">作者</el-tag>
             <div v-if="item.replied">&nbsp;&nbsp;回复</div>
           </div>
           <div class="comment-card-time">{{ item.timestamp | formatTimeFromNow }}</div>
@@ -148,7 +148,7 @@ export default {
               this.$emit('refresh-comment')
               this.repliedCommentAuthor = ''
               this.repliedCommentID = ''
-              this.resetForm (formName)
+              this.resetForm(formName)
               this.$message({
                 type: 'success',
                 message: '评论提交成功'
@@ -197,13 +197,9 @@ export default {
           font-weight: 200;
         }
         .badge-primary {
-          display: inline-block;
-          font-weight: 700;
-          color: #ffffff;
-          background-color: #2780E3;
-          line-height: 1rem;
-          padding: 0.25rem;
+          padding: 0 0.25rem;
           margin: 0 0.25rem;
+          border-radius: 0;
         }
       }
       .comment-card-time {
