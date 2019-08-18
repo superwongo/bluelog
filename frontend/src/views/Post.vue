@@ -12,7 +12,6 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       :total="total"
-      @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       class="post-comments"/>
     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="comment-submit mt1">
@@ -76,6 +75,7 @@ export default {
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
         email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ],
         site: [
@@ -89,7 +89,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             submitComment(this.post_id, this.ruleForm).then(response => {
-              if (response.data.code === 200 || response.data.code === 201) {
+              if (response.status === 200 || response.status === 201) {
                 this.get_comments()
                 this.$message({
                   type: 'success',
@@ -128,17 +128,13 @@ export default {
         this.currentPage = result.current_page
         this.pageSize = result.per_page
         this.total = result.total
+        const anchor = this.$el.querySelector('.post-share')
+        document.documentElement.scrollTop = anchor.offsetTop
       })
-    },
-    handleSizeChange (val) {
-      this.pageSize = val
-      this.get_comments()
     },
     handleCurrentChange (val) {
       this.currentPage = val
       this.get_comments()
-      const anchor = this.$el.querySelector('.post-comments')
-      document.documentElement.scrollTop = anchor.offsetTop
     }
   },
   filters: {

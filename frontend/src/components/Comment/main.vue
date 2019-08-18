@@ -20,14 +20,13 @@
     </div>
     <el-pagination
       small
-      hide-on-single-page
       background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
       :page-sizes="[5, 10, 15, 20]"
       :page-size="pageSize"
-      layout="prev, pager, next"
+      :layout="layout"
       :total="total">
     </el-pagination>
   </div>
@@ -44,6 +43,10 @@ export default {
       default () {
         return []
       }
+    },
+    layout: {
+      type: String,
+      default: 'prev, pager, next'
     },
     currentPage: {
       type: Number,
