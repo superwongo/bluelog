@@ -27,7 +27,8 @@
       :page-sizes="[5, 10, 15, 20]"
       :page-size="pageSize"
       :layout="layout"
-      :total="total">
+      :total="total"
+      v-if="total > 0">
     </el-pagination>
     <div class="comment-replied-anchor">
       <div class="comment-replied-info" v-show="repliedCommentAuthor">
