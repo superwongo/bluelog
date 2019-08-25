@@ -40,8 +40,8 @@ export default {
     .el-header {
       position: fixed;
       top: 0;
-      left: 7rem;
-      right: 8rem;
+      left: 6rem;
+      right: 6rem;
       z-index: 2000;
     }
   }

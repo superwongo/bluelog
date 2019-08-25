@@ -58,7 +58,7 @@ export default {
         type = 'bottom'
       }
       return type
-    },
+    }
   },
   mounted () {
     on(window, 'scroll', this.handleScroll)

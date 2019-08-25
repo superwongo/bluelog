@@ -18,20 +18,18 @@
         @refresh-comment="refreshCommentsInfo"
         class="post-comments"/>
     </div>
-    <Affix :offset-top="50" class="post-right fr">
-      <el-card class="category-card" shadow :body-style="categoryBodyStyle">
-        <div slot="header" class="category-title">
-          <span>分类</span>
-        </div>
-        <div v-for="(item, index) in categories" :key="item.id" class="category-content">
-          <div class="category-content-line">
-            <a>{{ item.name }}</a>
-            <el-tag effect="dark" size="small">{{ item.posts.length }}</el-tag>
-          </div>
-          <el-divider v-if="index !== categories.length-1"></el-divider>
-        </div>
-      </el-card>
-    </Affix>
+    <el-card class="post-right fr" shadow :body-style="categoryBodyStyle">
+      <div slot="header" class="category-title">
+        <span>分类</span>
+      </div>
+      <div v-for="(item, index) in categories" :key="item.id" class="category-content">
+        <el-row class="category-content-line">
+          <el-col :span="18"><a>{{ item.name }}</a></el-col>
+          <el-col :span="6"><el-tag effect="dark" size="small">{{ item.posts.length }}</el-tag></el-col>
+        </el-row>
+        <el-divider v-if="index !== categories.length-1"></el-divider>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -150,26 +148,23 @@ export default {
   .post-right {
     margin-top: 1rem;
     width: 25%;
-    .category-card {
-      background-color: rgba(0,0,0,0.03);
-      .category-title {
-        padding: 0 1rem;
+    background-color: rgba(0,0,0,0.03);
+    .category-title {
+      padding: 0 1rem;
+    }
+    .category-content {
+      .category-content-line {
+        padding: 0 2rem;
       }
-      .category-content {
-        .category-content-line {
-          @include spaceBetween(row);
-          padding: 0 2rem;
-        }
-        .el-divider {
-          margin: 1rem 0;
-        }
+      .el-divider {
+        margin: 0.75rem 0;
       }
-      .category-content:first-child {
-        padding-top: 0.5rem;
-      }
-      .category-content:last-child {
-        padding-bottom: 0.5rem;
-      }
+    }
+    .category-content:first-child {
+      padding-top: 0.5rem;
+    }
+    .category-content:last-child {
+      padding-bottom: 0.5rem;
     }
   }
 }
